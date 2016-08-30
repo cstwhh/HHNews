@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">腾飞新闻</string>
+    <string name="app_name">News</string>
+    <string name="news">News</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">设置</string>
-    <string name="action_share">分享</string>
-    <string name="about">关于</string>
+    <string name="action_settings">Setting</string>
+    <string name="action_share">Share</string>
+    <string name="about">About</string>
     <string name="main_activity_title">首页</string>
     <string name="title_activity_news_content"> </string>
     <string name="click_to_exit">再按一次退出程序</string>

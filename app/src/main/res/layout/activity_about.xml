@@ -1,11 +1,11 @@
-<com.example.lee.suesnews.ui.widget.GestureFrameLayout
+<com.ihandy.s2014011446.ui.widget.GestureFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/about_gesture_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_ground_color"
-    tools:context="com.example.lee.suesnews.ui.AboutActivity">
+    tools:context="com.ihandy.s2014011446.ui.AboutActivity">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
                 android:layout_width="@dimen/about_icon_size"
                 android:layout_height="@dimen/about_icon_size"
                 android:layout_margin="@dimen/view_margin"
-                android:src="@drawable/ic_suesnews"/>
+                android:src="@drawable/ic_news"/>
             <RelativeLayout
                 android:id="@+id/description"
                 android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
+                    android:text="@string/about"
                     android:layout_margin="@dimen/view_margin"
                     android:textSize="@dimen/text_size_title_bigger"/>
                 <TextView
@@ -106,4 +106,4 @@
 
     <include
         layout="@layout/common_toolbar"/>
-</com.example.lee.suesnews.ui.widget.GestureFrameLayout>
+</com.ihandy.s2014011446.ui.widget.GestureFrameLayout>

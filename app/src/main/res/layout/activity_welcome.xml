@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
-        tools:context="com.example.lee.suesnews.ui.WelcomeActivity">
+        tools:context="com.ihandy.s2014011446.ui.WelcomeActivity">
 
         <ImageView
             android:id="@+id/image_background"

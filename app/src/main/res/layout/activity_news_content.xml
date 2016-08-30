@@ -1,4 +1,4 @@
-<com.example.lee.suesnews.ui.widget.GestureFrameLayout
+<com.ihandy.s2014011446.ui.widget.GestureFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/news_content_gesture_layout"
@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/back_ground_color"
-    tools:context="com.example.lee.suesnews.ui.NewsContentActivity">
+    tools:context="com.ihandy.s2014011446.ui.NewsContentActivity">
 
 
     <ImageView
@@ -21,7 +21,7 @@
         android:layout_height="@dimen/flexible_space_image_height"
         android:background="?attr/colorPrimary" />
 
-    <com.example.lee.suesnews.ui.widget.ObservableScrollView
+    <com.ihandy.s2014011446.ui.widget.ObservableScrollView
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                     tools:text="adsdsadadas"
                     />
             </RelativeLayout>
-    </com.example.lee.suesnews.ui.widget.ObservableScrollView>
+    </com.ihandy.s2014011446.ui.widget.ObservableScrollView>
     <include
         layout="@layout/common_toolbar"/>
 
@@ -94,4 +94,4 @@
             android:textColor="?attr/colorAccent"
             tools:text="时间：2015/01/01  "/>
     </RelativeLayout>
-</com.example.lee.suesnews.ui.widget.GestureFrameLayout>
+</com.ihandy.s2014011446.ui.widget.GestureFrameLayout>
