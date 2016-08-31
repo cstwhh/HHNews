@@ -6,7 +6,6 @@ import java.util.Date;
 
 /**
  * 新闻实体类
- * Created by Administrator on 2015/1/18.
  */
 public class NewsItem {
 

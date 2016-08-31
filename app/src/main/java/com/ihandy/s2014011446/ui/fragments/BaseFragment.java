@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.ihandy.s2014011446.biz.NewsItemBiz;
+import com.ihandy.s2014011446.biz.NewsTypeBiz;
 
 
 public class BaseFragment extends Fragment {
     protected NewsItemBiz mNewsItemBiz;
+//    protected NewsTypeBiz mNewsTypeBiz;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNewsItemBiz = new NewsItemBiz(getActivity());
+//        mNewsItemBiz = new NewsItemBiz(getActivity());
     }
 
     @Override

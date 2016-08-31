@@ -6,7 +6,8 @@ android {
         disable 'MissingTranslation'
     }
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    //buildToolsVersion "21.1.2"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.ihandy.s2014011446"
@@ -15,6 +16,16 @@ android {
         versionCode 4
         versionName "beta-1.1.0"
     }
+    signingConfigs {
+        release {
+            storeFile file("myreleasekey.keystore")
+            storePassword "password"
+            keyAlias "MyReleaseKey"
+            keyPassword "password"
+            v2SigningEnabled false
+        }
+    }
+
     buildTypes {
         release {
             // runProguard false
@@ -55,6 +66,7 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Favorite-2.5.8.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.5.8.jar')
     compile files('libs/umeng-update-v2.6.0.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }
 repositories {
     jcenter()

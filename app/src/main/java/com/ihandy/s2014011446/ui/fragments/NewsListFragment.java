@@ -245,6 +245,7 @@ public class NewsListFragment extends BaseFragment {
                 //如果当前是第一次加载，则直接从数据库读取
                 if (netAvailable && mIsFirstLoad){
                     mIsFirstLoad = false;
+                    //mNewsTypeBiz.getNewsTypes(true);
                     return mNewsItemBiz.getNewsItemCache(mNewsType, currentPage[0], true);
                 }
                 return mNewsItemBiz.getNewsItems(mNewsType, currentPage[0],netAvailable);

@@ -6,7 +6,6 @@ import android.widget.ScrollView;
 
 /**
  * 附带监听滑动的ScrollView
- * Created by Administrator on 2015/3/6.
  */
 public class ObservableScrollView extends ScrollView {
 

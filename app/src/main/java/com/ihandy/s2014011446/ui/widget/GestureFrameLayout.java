@@ -26,7 +26,6 @@ import java.util.List;
 
 /**
  * 增加滑动返回手势的FrameLayout
- * Created by Administrator on 2015/2/20.
  */
 public class GestureFrameLayout extends FrameLayout  {
 

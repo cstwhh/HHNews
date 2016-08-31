@@ -3,9 +3,6 @@ package com.ihandy.s2014011446.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Administrator on 2015/2/15.
- */
 public class StringUtils {
 
     /**
@@ -35,5 +32,14 @@ public class StringUtils {
         return null;
     }
 
-
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (str!=null) {
+//            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Pattern p = Pattern.compile("\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
+    }
 }

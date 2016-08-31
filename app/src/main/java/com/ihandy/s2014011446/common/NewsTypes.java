@@ -2,7 +2,6 @@ package com.ihandy.s2014011446.common;
 
 /**
  * 新闻种类
- * Created by Administrator on 2015/1/18.
  */
 public class NewsTypes {
 

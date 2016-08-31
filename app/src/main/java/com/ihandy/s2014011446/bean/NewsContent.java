@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * 新闻内容
- * Created by Administrator on 2015/2/13.
  */
 public class NewsContent {
 

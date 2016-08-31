@@ -11,9 +11,8 @@ import java.util.regex.Pattern;
 
 /**
  * 相关API
- * Created by Administrator on 2015/1/18.
  */
-public class SuesApiUtils {
+public class NewsAPIUtils {
 
     public static final String NEWS_URL_MAIN = "http://news.sues.edu.cn";
     //各个页面主要url

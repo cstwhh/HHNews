@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,13 +41,20 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.ihandy.s2014011446.R;
 import com.ihandy.s2014011446.bean.NewsItem;
+import com.ihandy.s2014011446.bean.NewsType;
 import com.ihandy.s2014011446.biz.NewsItemBiz;
+import com.ihandy.s2014011446.biz.NewsTypeBiz;
 import com.ihandy.s2014011446.common.NewsTypes;
 import com.ihandy.s2014011446.ui.fragments.NewsListFragment;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.ihandy.s2014011446.utils.HttpUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -79,9 +87,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
     private ViewGroup mContent;
 
-//    private final int CURRENT_VERSION = Build.VERSION.SDK_INT;
-//    private final int VERSION_KITKAT = Build.VERSION_CODES.KITKAT;
-//    private final int VERSION_LOLLIPOP = Build.VERSION_CODES.LOLLIPOP;
+    //缓存
+    private List<NewsType> mNewsTypes = new ArrayList<NewsType>();
 
     //侧边栏头部图片
     private ImageView mHeaderImage;
@@ -89,7 +96,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     //标识是否点击过一次back退出
     private boolean mIsExit = false;
     //点击返回键时，延时 TIME_TO_EXIT 毫秒发送此handler重置mIsExit，再其被重置前如果再按一次返回键则退出应用
-    private Handler mExitHandler = new Handler(){
+    private Handler mExitHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -97,6 +104,11 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         }
     };
     final static int TIME_TO_EXIT = 2000;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +121,9 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         initViewPager();
 
         UmengUpdateAgent.update(this);  //检查更新
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initViews() {
@@ -116,7 +131,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mToolbar.setTitle(getResources().getString(R.string.main_activity_title));
         setSupportActionBar(mToolbar);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
@@ -170,7 +185,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
         //侧边栏
         mHeaderImage = (ImageView) findViewById(R.id.header_img);
-        mHeaderImage.setOnClickListener(new View.OnClickListener() {
+        mHeaderImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //resume the click
@@ -181,7 +196,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mAppSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -190,7 +205,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mAboutButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AboutActivity.class);
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
             }
         });
@@ -199,13 +214,13 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mShareButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShare(MainActivity.this,MainActivity.this.getResources().getString(R.string.share_app_string));
+                showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string));
             }
         });
 
     }
 
-    private void initViewPager(){
+    private void initViewPager() {
 
         mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
@@ -213,44 +228,138 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mFragmentList = new ArrayList<NewsListFragment>();
 
         //初始化fragment
-        NewsListFragment fragment1 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XXYW);
-        NewsListFragment fragment2 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XYKX);
-        NewsListFragment fragment3 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_KJDT);
-        NewsListFragment fragment4 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_MTJJ);
-        NewsListFragment fragment5 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_BMXW);
+//        NewsListFragment fragment1 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XXYW);
+//        NewsListFragment fragment2 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XYKX);
+//        NewsListFragment fragment3 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_KJDT);
+//        NewsListFragment fragment4 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_MTJJ);
+//        NewsListFragment fragment5 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_BMXW);
+//
+//        mFragmentList.add(fragment1);
+//        mFragmentList.add(fragment2);
+//        mFragmentList.add(fragment3);
+//        mFragmentList.add(fragment4);
+//        mFragmentList.add(fragment5);
 
-        mFragmentList.add(fragment1);
-        mFragmentList.add(fragment2);
-        mFragmentList.add(fragment3);
-        mFragmentList.add(fragment4);
-        mFragmentList.add(fragment5);
-
-
+        getFragmenList(mFragmentList, false);
         //初始化ViewPager
-        MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(),mFragmentList);
-        mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(0);
-
-        mTabs.setViewPager(mViewPager);
-//        mTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int i, float v, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int i) {
-////                mViewPager.setCurrentItem(i);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int i) {
-//
-//            }
-//        });
 
     }
 
+    private void getFragmenList(List<NewsListFragment> fragmentList, boolean forced) {
+        int total = mNewsTypes.size();
+        //不强制刷新时，如果此页已存在则直接从内存中加载
+//        TODO
+//        if (!forced && total > 0) {
+//            mAdapter.addNews(mNewsTypes);
+//            mAdapter.notifyDataSetChanged();
+//            return;
+//        }
+//
+//        if (forced && mNewsTypes.size() > 0) {
+//            mNewsTypes.clear();
+//        }
+        LoadNewsTypesTask loadDataTask = new LoadNewsTypesTask(fragmentList, forced);
+        loadDataTask.execute(0);
+    }
+
+    /**
+     * 加载新闻列表的任务
+     */
+    class LoadNewsTypesTask extends AsyncTask<Integer, Integer, List<NewsType>> {
+
+        private List<NewsListFragment> mFragmentList;
+        private boolean mIsForced;
+
+        public LoadNewsTypesTask(List<NewsListFragment> fragmentList, boolean forced) {
+            super();
+            mFragmentList = fragmentList;
+            mIsForced = forced;
+        }
+
+        /**
+         * 得到当前页码的新闻列表
+         *
+         * @param currentPage 当前页码
+         * @return 当前页码的新闻列表, 出错返回null
+         */
+        @Override
+        protected List<NewsType> doInBackground(Integer... currentPage) {
+
+            try {
+                //TODO
+//                boolean netAvailable = HttpUtils.IsNetAvailable(getActivity());
+//                //如果当前是第一次加载，则直接从数据库读取
+//                if (netAvailable && mIsFirstLoad){
+//                    mIsFirstLoad = false;
+//                    mNewsTypeBiz.getNewsTypes(true);
+//                    return mNewsItemBiz.getNewsItemCache(mNewsType, currentPage[0], true);
+//                }
+//                return mNewsItemBiz.getNewsItems(mNewsType, currentPage[0],netAvailable);
+                NewsTypeBiz mNewsTypeBiz = new NewsTypeBiz(MainActivity.this);
+                return mNewsTypeBiz.getNewsTypes(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("ASDNET", "neterror :" + e);
+                return null;
+            }
+
+        }
+
+        /**
+         * 得到新闻列表后将其加载
+         *
+         * @param newsTypes 得到的新闻列表
+         */
+        @Override
+        protected void onPostExecute(List<NewsType> newsTypes) {
+            if (newsTypes == null) {
+                Toast.makeText(MainActivity.this, "获取type失败"
+                        , Toast.LENGTH_LONG).show();
+                return;
+            }
+            //处理强制刷新
+//            TODO
+//            if (mIsForced) {
+//                mAdapter.getmNewsList().clear();
+//            }
+            mNewsTypes.addAll(newsTypes);
+//            mAdapter.addNews(newsItems);
+//            mAdapter.notifyDataSetChanged();
+//            frame.refreshComplete();
+            int i = 0;
+            for(NewsType newsType : newsTypes) {
+                if(i == 4)  break;
+                ++i;
+                Log.i(getClass().getName(), "UrlType: " + newsType.getUrlType());
+                if(newsType.getUrlType() == "business") {
+                    NewsListFragment fragment = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XXYW);
+                    mFragmentList.add(fragment);
+                }else if(newsType.getUrlType() == "health") {
+                    NewsListFragment fragment = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XYKX);
+                    mFragmentList.add(fragment);
+                }else {
+                    NewsListFragment fragment = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_BMXW);
+                    mFragmentList.add(fragment);
+                }
+            }
+
+            MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(), mFragmentList);
+            mViewPager.setAdapter(adapter);
+            mViewPager.setCurrentItem(0);
+
+            mTabs.setViewPager(mViewPager);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -268,7 +377,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
             return true;
         }
@@ -288,50 +397,52 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
     /**
      * 根据滑动方向设置ToolBar的显隐
-     * @param scrollState   滑动方向
+     *
+     * @param scrollState 滑动方向
      */
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        if (scrollState == ScrollState.UP){
-            if (toolbarIsShown()){
+        if (scrollState == ScrollState.UP) {
+            if (toolbarIsShown()) {
                 hideToolbar();
             }
-        } else if (scrollState == ScrollState.DOWN){
-            if (toolbarIsHidden()){
+        } else if (scrollState == ScrollState.DOWN) {
+            if (toolbarIsHidden()) {
                 showToolbar();
             }
         }
     }
 
 
-    private boolean toolbarIsShown(){
+    private boolean toolbarIsShown() {
         return mToolbar.getTranslationY() == 0;
     }
 
-    private boolean toolbarIsHidden(){
+    private boolean toolbarIsHidden() {
         return mToolbar.getTranslationY() == -mToolbar.getHeight();
     }
 
-    private void showToolbar(){
+    private void showToolbar() {
         moveToolbar(0);
     }
 
 
-    private void hideToolbar(){
+    private void hideToolbar() {
         moveToolbar(-mToolbar.getHeight());
     }
 
 
     /**
      * 将toolbar移动到某个位置
+     *
      * @param toTranslationY 移动到的Y轴位置
      */
-    private void moveToolbar(float toTranslationY){
-        if(mToolbar.getTranslationY() == toTranslationY){
+    private void moveToolbar(float toTranslationY) {
+        if (mToolbar.getTranslationY() == toTranslationY) {
             return;
         }
         //利用动画过渡移动的过程
-        final ValueAnimator animator = ValueAnimator.ofFloat(mToolbar.getTranslationY(),toTranslationY).
+        final ValueAnimator animator = ValueAnimator.ofFloat(mToolbar.getTranslationY(), toTranslationY).
                 setDuration(200);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -342,7 +453,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mContent.getLayoutParams();
                 lp.height = (int) (getScreenHeight() - translationY - getStatusBarHeight()
                         - lp.topMargin);
-                if (CURRENT_VERSION >= VERSION_KITKAT && VERSION_LOLLIPOP > CURRENT_VERSION){
+                if (CURRENT_VERSION >= VERSION_KITKAT && VERSION_LOLLIPOP > CURRENT_VERSION) {
                     lp.height -= getNavigationBarHeight();
                 }
                 Log.i("TEST", "after" + Float.toString(mToolbar.getHeight()));
@@ -354,7 +465,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exit();
             return false;
         }
@@ -364,15 +475,15 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     /**
      * 实现点击两次退出程序
      */
-    private void exit(){
-        if (mIsExit){
+    private void exit() {
+        if (mIsExit) {
             finish();
             System.exit(0);
-        }else {
+        } else {
             mIsExit = true;
-            Toast.makeText(getApplicationContext(),R.string.click_to_exit,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.click_to_exit, Toast.LENGTH_SHORT).show();
             //两秒内不点击back则重置mIsExit
-            mExitHandler.sendEmptyMessageDelayed(0,TIME_TO_EXIT);
+            mExitHandler.sendEmptyMessageDelayed(0, TIME_TO_EXIT);
         }
     }
 }

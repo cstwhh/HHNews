@@ -21,7 +21,6 @@ import java.util.Random;
 
 /**
  *
- * Created by Administrator on 2015/2/5.
  */
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>{

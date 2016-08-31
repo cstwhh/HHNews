@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.ihandy.s2014011446.bean.NewsContent;
 import com.ihandy.s2014011446.bean.NewsItem;
+import com.ihandy.s2014011446.bean.NewsType;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -16,16 +17,17 @@ import java.sql.SQLException;
 
 /**
  *
- * Created by Administrator on 2015/2/24.
  */
 public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "suesNews.db";
+    private static final String DATABASE_NAME = "News.db";
     private static final int DATABASE_VERSION = 1;
 
+    private Dao<NewsType,Integer> newsTypeDao = null;
     private Dao<NewsItem,Integer> newsItemDao = null;
     private Dao<NewsContent,Integer> newsContentDao = null;
 
+    private RuntimeExceptionDao<NewsType,Integer> newsTypeRuntimeDao = null;
     private RuntimeExceptionDao<NewsItem,Integer> newsItemRuntimeDao = null;
     private RuntimeExceptionDao<NewsContent,Integer> newsContentRuntimeDao = null;
 
@@ -83,6 +85,12 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return newsItemDao;
     }
+    public Dao<NewsType,Integer> getNewsTypeDao() throws SQLException {
+        if (newsTypeDao == null){
+            newsTypeDao = getDao(NewsType.class);
+        }
+        return newsTypeDao;
+    }
 
     public Dao<NewsContent, Integer> getNewsContentDao() throws SQLException {
         if (newsContentDao == null){
@@ -104,7 +112,13 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return newsItemRuntimeDao;
     }
+    public RuntimeExceptionDao<NewsType, Integer> getNewsTypeRuntimeDao() {
+        if (newsTypeRuntimeDao == null){
+            newsTypeRuntimeDao = getRuntimeExceptionDao(NewsType.class);
+        }
+        return newsTypeRuntimeDao;
 
+    }
 
 
 }

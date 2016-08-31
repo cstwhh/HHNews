@@ -10,7 +10,7 @@ import com.ihandy.s2014011446.dao.NewsContentDao;
 import com.ihandy.s2014011446.dao.NewsItemDao;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.ihandy.s2014011446.utils.StringUtils;
-import com.ihandy.s2014011446.utils.SuesApiUtils;
+import com.ihandy.s2014011446.utils.NewsAPIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,7 +25,6 @@ import java.util.List;
 
 /**
  * 处理新闻的业务逻辑类
- * Created by Administrator on 2015/1/18.
  */
 public class NewsItemBiz {
 
@@ -62,7 +61,7 @@ public class NewsItemBiz {
      * 查看对象是否过期
      * @param t
      * @param <T>
-     * @return 如果未过期则返回大于0的数，如果过期则返回小与0的数
+     * @return 如果未过期则返回大于0的数，如果过期则返回<0的数
      */
     public <T> int isOutOfTime(T t){
 
@@ -154,7 +153,7 @@ public class NewsItemBiz {
         }
         //若数据已过期，则重新获取
 
-        String url = SuesApiUtils.getNewsUrl(newsType, currentPage);
+        String url = NewsAPIUtils.getNewsUrl(newsType, currentPage);
         String htmlStr = null;
         //如果服务器未返回数据,则返回数据库中的数据
         try {
@@ -175,7 +174,7 @@ public class NewsItemBiz {
             Element columnTable = items.get(i).getElementsByClass(COLUMN_TABLE_CLASS).get(0);
             Element link = columnTable.getElementsByTag("a").get(0);
             String contentUrl = link.attr("href");  //新闻内容链接
-            newsItem.setUrl(SuesApiUtils.NEWS_URL_MAIN + contentUrl);
+            newsItem.setUrl(NewsAPIUtils.NEWS_URL_MAIN + contentUrl);
 
             newsItem.setTitle(link.child(0).text());    //设置新闻标题
 

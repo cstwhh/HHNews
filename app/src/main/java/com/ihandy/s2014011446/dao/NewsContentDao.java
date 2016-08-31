@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * 对新闻内容的数据库操作
- * Created by Administrator on 2015/2/24.
  */
 public class NewsContentDao {
     private RuntimeExceptionDao<NewsContent,Integer> mNewsContentDao;
