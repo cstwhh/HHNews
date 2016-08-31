@@ -323,30 +323,16 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 //                mAdapter.getmNewsList().clear();
 //            }
             mNewsTypes.addAll(newsTypes);
-//            mAdapter.addNews(newsItems);
-//            mAdapter.notifyDataSetChanged();
-//            frame.refreshComplete();
-            int i = 0;
             for(NewsType newsType : newsTypes) {
-                if(i == 4)  break;
-                ++i;
-                Log.i(getClass().getName(), "UrlType: " + newsType.getUrlType());
-                if(newsType.getUrlType() == "business") {
-                    NewsListFragment fragment = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XXYW);
-                    mFragmentList.add(fragment);
-                }else if(newsType.getUrlType() == "health") {
-                    NewsListFragment fragment = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XYKX);
-                    mFragmentList.add(fragment);
-                }else {
-                    NewsListFragment fragment = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_BMXW);
-                    mFragmentList.add(fragment);
-                }
+                NewsListFragment fragment = NewsListFragment.newInstance(newsType);
+                mFragmentList.add(fragment);
+                Log.i(getClass().getName(), "Add UrlType: " + newsType.getUrlType());
             }
 
             MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(), mFragmentList);
             mViewPager.setAdapter(adapter);
             mViewPager.setCurrentItem(0);
-
+            mTabs.setAllCaps(false);
             mTabs.setViewPager(mViewPager);
         }
 

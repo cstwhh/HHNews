@@ -1,6 +1,7 @@
 package com.ihandy.s2014011446.bean;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
@@ -9,25 +10,6 @@ import java.util.Date;
  */
 public class NewsItem {
 
-//    @DatabaseField(generatedId = true)
-    private int id;    //ID
-    @DatabaseField
-    private int type;       //文章类型
-    @DatabaseField
-    private String title;   //标题
-    @DatabaseField(id = true)
-    private String url;    //链接
-    @DatabaseField(canBeNull = true)
-    private String date;    //日期
-    @DatabaseField
-    private String content; //文章内容
-    @DatabaseField
-    private int pageNumber; //所在页码
-    @DatabaseField(canBeNull = true)
-    private String source;  //媒体新闻的来源
-    @DatabaseField(canBeNull = false)
-    private Date updateTime;//更新时间
-
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -35,15 +17,14 @@ public class NewsItem {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-
-    public String getSource() {
-        return source;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setTitle(String title) {
+        this.title = title;
     }
+
 
     public int getPageNumber() {
         return pageNumber;
@@ -53,66 +34,50 @@ public class NewsItem {
         this.pageNumber = pageNumber;
     }
 
-    public int getId() {
-        return id;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
-    public int getType() {
-        return type;
+    @DatabaseField
+    private String category;
+    class Imgs {
+        String url;
     }
-
-    public void setType(int type) {
-        this.type = type;
+    private Imgs imgs;
+    @DatabaseField
+    private String imgsUrl;
+    @DatabaseField(id = true)
+    private String news_id;
+    @DatabaseField
+    private String origin;
+    class Source {
+        String url;
     }
+    private Source source;
+    @DatabaseField
+    private String sourceUrl;
+    @DatabaseField
+    private String title;
+    @DatabaseField
+    private Date updateTime;
+    @DatabaseField
+    private int pageNumber;
 
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     @Override
     public String toString() {
-        return "NewsItem{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                ", date='" + date + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return "NewsContent{" +
+                    "category=" + category +
+                    ", imgsUrl=" + imgs.url +
+                    ", news_id=" + news_id +
+                    ", origin=" + origin +
+                    ", sourceUrl=" + source.url +
+                    ", title=" + title +
+                "}";
     }
-
-
 
 }

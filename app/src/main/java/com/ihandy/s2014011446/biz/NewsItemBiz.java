@@ -12,16 +12,16 @@ import com.ihandy.s2014011446.utils.HttpUtils;
 import com.ihandy.s2014011446.utils.StringUtils;
 import com.ihandy.s2014011446.utils.NewsAPIUtils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 处理新闻的业务逻辑类
@@ -93,10 +93,11 @@ public class NewsItemBiz {
      * @return  新闻项列表缓存
      * @throws SQLException
      */
-    public List<NewsItem> getNewsItemCache(int newsType,int currentPage,boolean isNeedRefresh) throws SQLException {
+    public List<NewsItem> getNewsItemCache(String newsType,int currentPage,boolean isNeedRefresh) throws SQLException {
         //如果缓存为空或需要刷新缓存时重新从数据库提取数据
         if (mNewsItemCache == null || isNeedRefresh){
-            mNewsItemCache = mNewsItemDao.searchByPageAndType(currentPage,newsType);
+            // TODO
+            // mNewsItemCache = mNewsItemDao.searchByPageAndType(currentPage,newsType);
         }
         return mNewsItemCache;
     }
@@ -132,18 +133,18 @@ public class NewsItemBiz {
 
     /**
      * 根据新闻类型和页码得到新闻列表
-     * @param newsType      新闻类型
+     * @param newsType      新闻URL类型
      * @param currentPage   页码
      * @param netAvailable  当前是否有网络
      * @return              新闻列表
      * @throws Exception
      */
-    public List<NewsItem> getNewsItems(int newsType,int currentPage,boolean netAvailable) throws Exception {
+    public List<NewsItem> getNewsItems(String newsType,int currentPage,boolean netAvailable) throws Exception {
 
         //当无网络时加载数据库中数据
         Log.i("ASDNET","netAvailable:"+netAvailable);
 
-        if (!netAvailable ){
+        if (!netAvailable ) {
             return getNewsItemCache(newsType,currentPage,false);
         }
         //有网络时查看数据是否过期,未过期则返回缓存数据
@@ -154,53 +155,55 @@ public class NewsItemBiz {
         //若数据已过期，则重新获取
 
         String url = NewsAPIUtils.getNewsUrl(newsType, currentPage);
-        String htmlStr = null;
+
+        String jsonStr = null;
         //如果服务器未返回数据,则返回数据库中的数据
         try {
-            htmlStr = HttpUtils.doGet(url);
+            jsonStr = HttpUtils.doGet(url);
         }catch (Exception ex){
             return getNewsItemCache(newsType,currentPage,true);
         }
+        Log.i("GETITEM", "getNewsItems: " + url);
+        //Log.i("GETITEM", "getNewsItems: " + jsonStr);
+        jsonStr = StringUtils.replaceBlankAndSpace(jsonStr);
+
+        String PATTERN = "\"news\":(\\[.*\\])";
+        Pattern p =Pattern.compile(PATTERN);
+        Matcher m = p.matcher(jsonStr);
+        String jsonList = null;
+        if(m.find()) jsonList = m.group(1);
+        else return null;
+        Log.i(getClass().getName(), "jsonList: " + jsonList);
+
+        jsonList = StringUtils.getRightJsonSyntax(jsonList);
+        Log.i(getClass().getName(), "rightJsonList: " + jsonList);
+
+
         List<NewsItem> newsItems = new ArrayList<NewsItem>();
-
-        NewsItem newsItem;
-        Document document = Jsoup.parse(htmlStr);
-        Element itemTable = document.getElementsByClass(BASE_TABLE_CLASS).get(0);
-        Elements items = itemTable.child(0).children();
-        for (int i=0;i<items.size();i++){
-            newsItem = new NewsItem();
-            newsItem.setType(newsType);
-
-            Element columnTable = items.get(i).getElementsByClass(COLUMN_TABLE_CLASS).get(0);
-            Element link = columnTable.getElementsByTag("a").get(0);
-            String contentUrl = link.attr("href");  //新闻内容链接
-            newsItem.setUrl(NewsAPIUtils.NEWS_URL_MAIN + contentUrl);
-
-            newsItem.setTitle(link.child(0).text());    //设置新闻标题
-
-            //媒体聚焦页面有来源无时间
-            if (newsType != NewsTypes.NEWS_TPYE_MTJJ){
-                Element postTime = columnTable.getElementsByClass(POST_TIME_CLASS).get(0);
-                newsItem.setDate(postTime.text());
-            }else{
-                Element source = columnTable.getElementsByClass(NEWS_SOURCE_CLASS).get(0);
-                newsItem.setSource(source.text());
-            }
-
-            newsItem.setPageNumber(currentPage);
-            //文章内容点击进入后再添加
-
-            newsItem.setUpdateTime(new Date());
-            newsItems.add(newsItem);
-
+        try {
+            newsItems = new Gson().fromJson(jsonList, new TypeToken<List<NewsItem>>() {}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(NewsItem newsItem : newsItems) {
+            Log.i("NewsItemBiz", "NewsItemsToString: " + newsItem.toString());git
         }
 
-        //将数据添加进数据库
-        for(NewsItem item : newsItems) {
-            mNewsItemDao.createOrUpdate(item);
-        }
-        //将数据添加进缓存
-        setNewsItemCache(newsItems);
+
+
+//        NewsItem newsItem = new NewsItem();
+//        newsItem.setPageNumber(currentPage);
+//        //文章内容点击进入后再添加
+//
+//        newsItem.setUpdateTime(new Date());
+//        newsItems.add(newsItem);
+
+//        //将数据添加进数据库
+//        for(NewsItem item : newsItems) {
+//            mNewsItemDao.createOrUpdate(item);
+//        }
+//        //将数据添加进缓存
+//        setNewsItemCache(newsItems);
 
         return newsItems;
 
@@ -222,56 +225,56 @@ public class NewsItemBiz {
 //        Log.i("ASD","html"+htmlStr);
         NewsContent news = new NewsContent();
 
-        Document document = Jsoup.parse(htmlStr);
-//        Log.i("ASD","html"+htmlStr);
-        //新闻url
-        news.setUrl(url);
-
-        //新闻标题
-        Element titleElement = document.getElementsByClass(NEWS_TITLE_CLASS).get(0);
-        Log.i("ASD","Title: "+titleElement.text());
-        news.setTitle(titleElement.text());
-
-        //包含新闻信息的p标签
-        Element metaElement = document.getElementsByClass(NEWS_META_CLASS).get(0);
-        Log.i("ASD","metaElement"+metaElement.text());
-        //新闻时间
-        news.setDate(StringUtils.getDateFromString(metaElement.text()));
-        Log.i("ASDDATE","date:  "+StringUtils.getDateFromString(metaElement.text()));
-
-        //新闻作者
-        Element authorElement = document.getElementsByClass(NEWS_META_ITEM_CLASS).get(0);
-        Log.i("ASD","authorElement"+authorElement.text());
-        news.setAuthor(authorElement.text());
-
-        //新闻来源
-        Element sourceElement = document.getElementsByClass(NEWS_META_ITEM_CLASS).get(2);
-        Log.i("ASD","sourceElement"+sourceElement.text());
-        news.setSource(sourceElement.text());
-
-        //新闻内容
-        Element contentElement = document.getElementsByClass(NEWS_ARTICLE_CLASS).get(0);
-        Elements contentItems = contentElement.children();
-        //新闻内容都在p标签内，其中某些是图片
-        for(Element contentItem : contentItems){
-
-            Elements images = contentItem.getElementsByTag("img");
-            //获取图片
-            if (images.size() > 0){
-                for (Element image : images){
-//                    news.addImgUrl(image.attr("src"));
-                }
-                continue;
-            }
-            if(contentItem.text().trim().length()<=1){
-                continue;
-            }
-            Log.i("ASD","contentText"+contentItem.text() + " length: " + contentItem.text().trim().length());
-            news.addContent(contentItem.text());
-
-        }
-
-        //将数据添加进数据库
+//        Document document = Jsoup.parse(htmlStr);
+////        Log.i("ASD","html"+htmlStr);
+//        //新闻url
+//        news.setUrl(url);
+//
+//        //新闻标题
+//        Element titleElement = document.getElementsByClass(NEWS_TITLE_CLASS).get(0);
+//        Log.i("ASD","Title: "+titleElement.text());
+//        news.setTitle(titleElement.text());
+//
+//        //包含新闻信息的p标签
+//        Element metaElement = document.getElementsByClass(NEWS_META_CLASS).get(0);
+//        Log.i("ASD","metaElement"+metaElement.text());
+//        //新闻时间
+//        news.setDate(StringUtils.getDateFromString(metaElement.text()));
+//        Log.i("ASDDATE","date:  "+StringUtils.getDateFromString(metaElement.text()));
+//
+//        //新闻作者
+//        Element authorElement = document.getElementsByClass(NEWS_META_ITEM_CLASS).get(0);
+//        Log.i("ASD","authorElement"+authorElement.text());
+//        news.setAuthor(authorElement.text());
+//
+//        //新闻来源
+//        Element sourceElement = document.getElementsByClass(NEWS_META_ITEM_CLASS).get(2);
+//        Log.i("ASD","sourceElement"+sourceElement.text());
+//        news.setSource(sourceElement.text());
+//
+//        //新闻内容
+//        Element contentElement = document.getElementsByClass(NEWS_ARTICLE_CLASS).get(0);
+//        Elements contentItems = contentElement.children();
+//        //新闻内容都在p标签内，其中某些是图片
+//        for(Element contentItem : contentItems){
+//
+//            Elements images = contentItem.getElementsByTag("img");
+//            //获取图片
+//            if (images.size() > 0){
+//                for (Element image : images){
+////                    news.addImgUrl(image.attr("src"));
+//                }
+//                continue;
+//            }
+//            if(contentItem.text().trim().length()<=1){
+//                continue;
+//            }
+//            Log.i("ASD","contentText"+contentItem.text() + " length: " + contentItem.text().trim().length());
+//            news.addContent(contentItem.text());
+//
+//        }
+//
+//        //将数据添加进数据库
         mNewsContentDao.createOrUpdate(news);
 
         return news;

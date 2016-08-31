@@ -31,7 +31,7 @@ public class StringUtils {
         }
         return null;
     }
-
+    //without replacing space
     public static String replaceBlank(String str) {
         String dest = "";
         if (str!=null) {
@@ -39,6 +39,28 @@ public class StringUtils {
             Pattern p = Pattern.compile("\t|\r|\n");
             Matcher m = p.matcher(str);
             dest = m.replaceAll("");
+        }
+        return dest;
+    }
+    public static String replaceBlankAndSpace(String str) {
+        String dest = "";
+        if (str!=null) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
+    }
+    public static String getRightJsonSyntax(String str) {
+        String dest = "";
+        if (str!=null) {
+            Pattern p = Pattern.compile("\"imgs\":\\[\\{");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("\"imgs\":\\{");
+
+            p = Pattern.compile("\\}\\],\"locale_category");
+            m = p.matcher(dest);
+            dest = m.replaceAll("\\},\"locale_category");
         }
         return dest;
     }

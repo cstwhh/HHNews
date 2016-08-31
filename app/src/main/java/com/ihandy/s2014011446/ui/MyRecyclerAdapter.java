@@ -104,8 +104,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         viewHolder.mTitleTextView.setText(mNewsList.get(i).getTitle());
         //如果日期为空，则尝试使用新闻来源
-        viewHolder.mDateTextView.setText(mNewsList.get(i).getDate() == null ?
-                mNewsList.get(i).getSource():mNewsList.get(i).getDate());
+        viewHolder.mDateTextView.setText("Date");
         viewHolder.bindData(mNewsList.get(i));
     }
 
@@ -147,8 +146,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public void bindData(NewsItem newsItem){
             mTitleTextView.setText(newsItem.getTitle());
             //如果日期为空，则尝试使用新闻来源
-            mDateTextView.setText(newsItem.getDate() == null ?
-                    newsItem.getSource():newsItem.getDate());
+            mDateTextView.setText("TODO_date");
             //图片随机分配
 //            mTitleImageView.setImageDrawable();
             mNewsItem = newsItem;

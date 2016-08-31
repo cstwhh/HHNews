@@ -3,6 +3,7 @@ package com.ihandy.s2014011446.ui;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 
 import com.ihandy.s2014011446.ui.fragments.NewsListFragment;
@@ -11,11 +12,9 @@ import java.util.List;
 
 /**
  *
- * Created by Administrator on 2015/2/7.
  */
 public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] TITLES = {"学校要闻","校园快讯","科教动态","媒体聚焦","部门新闻"};
     List<NewsListFragment> mList;
     public MyViewPagerAdapter(FragmentManager fm, List<NewsListFragment> list) {
         super(fm);
@@ -34,6 +33,7 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return TITLES[position];
+        Log.i("viewPageAdapter", "getPageTitle:[" + position + "] " + (CharSequence)(mList.get(position).getNewsShowType()));
+        return mList.get(position).getNewsShowType();
     }
 }

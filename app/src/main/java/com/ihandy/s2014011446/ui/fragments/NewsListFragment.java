@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.ihandy.s2014011446.R;
 import com.ihandy.s2014011446.bean.NewsContent;
 import com.ihandy.s2014011446.bean.NewsItem;
+import com.ihandy.s2014011446.bean.NewsType;
 import com.ihandy.s2014011446.biz.NewsItemBiz;
 import com.ihandy.s2014011446.common.NewsTypes;
 import com.ihandy.s2014011446.dao.NewsItemDao;
@@ -45,9 +46,11 @@ import in.srain.cube.views.ptr.header.MaterialHeader;
 public class NewsListFragment extends BaseFragment {
 
     private static final String ARG_NEWS_TYPE = "newsType";
+    private static final String ARG_NEWS_URL_TYPE = "newsUrlType";
 
     //新闻类型
-    private int mNewsType;
+    private String mNewsType;
+    private String mNewsUrlType;
 
     private ObservableRecyclerView mRecyclerView;
     private MyRecyclerAdapter mAdapter;
@@ -69,10 +72,11 @@ public class NewsListFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static NewsListFragment newInstance(int newsType) {
+    public static NewsListFragment newInstance(NewsType newsType) {
         NewsListFragment fragment = new NewsListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_NEWS_TYPE, newsType);
+        args.putString(ARG_NEWS_TYPE, newsType.getShowType());
+        args.putString(ARG_NEWS_URL_TYPE, newsType.getUrlType());
         fragment.setArguments(args);
         return fragment;
     }
@@ -141,7 +145,7 @@ public class NewsListFragment extends BaseFragment {
                                 view, bitmap, 0, 0);
 
                         Bundle urlBundle = new Bundle();
-                        urlBundle.putString("url",item.getUrl());
+                        urlBundle.putString("url",item.getSourceUrl());
                         startActivityIntent.putExtra("key",urlBundle);
                         ActivityCompat.startActivity(getActivity(), startActivityIntent, options.toBundle());
 
@@ -183,7 +187,8 @@ public class NewsListFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mNewsType = getArguments().getInt(ARG_NEWS_TYPE);
+            mNewsType = getArguments().getString(ARG_NEWS_TYPE);
+            mNewsUrlType = getArguments().getString(ARG_NEWS_URL_TYPE);
         }
         mCurrentPage = 0;
     }
@@ -208,7 +213,7 @@ public class NewsListFragment extends BaseFragment {
         if(forced && mNewsItems.size()>0){
             mNewsItems.clear();
         }
-        LoadNewsListTask loadDataTask = new LoadNewsListTask(adapter,mNewsType,forced);
+        LoadNewsListTask loadDataTask = new LoadNewsListTask(adapter,mNewsUrlType,forced);
         loadDataTask.execute(currentPage);
     }
 
@@ -222,9 +227,9 @@ public class NewsListFragment extends BaseFragment {
 
         private MyRecyclerAdapter mAdapter;
         private boolean mIsForced;
-        private int mNewsType;
+        private String mNewsType;
 
-        public LoadNewsListTask(MyRecyclerAdapter adapter,int newsType,boolean forced) {
+        public LoadNewsListTask(MyRecyclerAdapter adapter,String newsType,boolean forced) {
             super();
             mAdapter = adapter;
             mIsForced = forced;
@@ -245,7 +250,6 @@ public class NewsListFragment extends BaseFragment {
                 //如果当前是第一次加载，则直接从数据库读取
                 if (netAvailable && mIsFirstLoad){
                     mIsFirstLoad = false;
-                    //mNewsTypeBiz.getNewsTypes(true);
                     return mNewsItemBiz.getNewsItemCache(mNewsType, currentPage[0], true);
                 }
                 return mNewsItemBiz.getNewsItems(mNewsType, currentPage[0],netAvailable);
@@ -287,6 +291,13 @@ public class NewsListFragment extends BaseFragment {
         protected void onPreExecute() {
             super.onPreExecute();
         }
+    }
+    public String getNewsShowType() {
+
+        if (mNewsType == null && getArguments() != null) {
+            mNewsType = getArguments().getString(ARG_NEWS_TYPE);
+        }
+        return mNewsType;
     }
 
 }

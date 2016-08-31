@@ -46,9 +46,7 @@ public class NewsTypeBiz {
         //有网络时查看数据是否过期,未过期则返回缓存数据
         //若数据已过期，则重新获取
 
-        //String url = NewsAPIUtils.getNewsUrl(newsType, currentPage);
         String url = "http://assignment.crazz.cn/news/en/category?timestamp=" + System.currentTimeMillis();
-//        http://assignment.crazz.cn/news/query?locale=en&category=<category>&max_news_id=<news_id>
         Log.i(getClass().getName(), "url: " + url);
         String jsonStr = null;
         //如果服务器未返回数据,则返回数据库中的数据
