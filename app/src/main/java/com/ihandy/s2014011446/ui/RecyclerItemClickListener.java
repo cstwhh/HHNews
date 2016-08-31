@@ -10,7 +10,6 @@ import com.ihandy.s2014011446.R;
 
 /**
  * RecyclerView Item点击监听器
- * Created by Administrator on 2015/2/15.
  */
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 

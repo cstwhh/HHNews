@@ -28,18 +28,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     //当前显示的数据
     private List<NewsItem> mNewsList = new ArrayList<NewsItem>();
 
-    public void setmDrawble(Drawable mDrawble) {
-        if (this.mDrawble == null) {
-            this.mDrawble = mDrawble;
-        }
-    }
-
     private Drawable mDrawble;
 //    private Context mContext;
 
-    public List<NewsItem> getmNewsList() {
-        return mNewsList;
-    }
 
     public MyRecyclerAdapter(Context context){
         this(context,null);
@@ -49,20 +40,25 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public MyRecyclerAdapter(Context context, List<NewsItem> myDataset){
 
         mNewsList = myDataset != null ? myDataset : new ArrayList<NewsItem>();
-        Random random = new Random();
-        int i = random.nextInt(4);
-        setmDrawble(context.getResources().getDrawable(getImageId(i)));
+//        Random random = new Random();
+//        int i = random.nextInt(4);
+//        setmDrawble(context.getResources().getDrawable(getImageId(i)));
     }
 
-    /**
-     * 添加新闻列表
-     * @param news 要添加的新闻列表
-     */
+    public List<NewsItem> getmNewsList() {
+        return mNewsList;
+    }
     public void addNews(List<NewsItem> news){
         mNewsList.addAll(news);
         Log.i("LIXU", "adapter" + mNewsList.size());
     }
 
+
+    public void setmDrawble(Drawable mDrawble) {
+        if (this.mDrawble == null) {
+            this.mDrawble = mDrawble;
+        }
+    }
     private int getImageId(int id){
         int num = id % 4;
         switch (num){
@@ -89,10 +85,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recyclerview,
                 viewGroup,false);
         TextView titleTextView = (TextView) v.findViewById(R.id.titleTextView);
-        TextView dateTextView = (TextView) v.findViewById(R.id.dateTextView);
+        TextView sourceTextView = (TextView) v.findViewById(R.id.sourceTextView);
         ImageView titleImageView = (ImageView) v.findViewById(R.id.titleImageView);
-        titleImageView.setImageDrawable(mDrawble);
-        return new ViewHolder(v,titleTextView,dateTextView,titleImageView);
+        //titleImageView.setImageDrawable(mDrawble);
+        return new ViewHolder(v,titleTextView,sourceTextView,titleImageView);
     }
 
     /**
@@ -103,8 +99,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         viewHolder.mTitleTextView.setText(mNewsList.get(i).getTitle());
-        //如果日期为空，则尝试使用新闻来源
-        viewHolder.mDateTextView.setText("Date");
+        viewHolder.mSourceTextView.setText(mNewsList.get(i).getOrigin());
+        viewHolder.mTitleImageView.setImageBitmap(mNewsList.get(i).getBitmap());
         viewHolder.bindData(mNewsList.get(i));
     }
 
@@ -120,7 +116,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         private View mView;
         private TextView mTitleTextView;
-        private TextView mDateTextView;
+        private TextView mSourceTextView;
         private ImageView mTitleImageView;
 
         private NewsItem mNewsItem;
@@ -129,11 +125,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             super(v);
         }
 
-        public ViewHolder(View v,TextView titleTextView,TextView dateTextView,ImageView imageView){
+        public ViewHolder(View v,TextView titleTextView,TextView sourceTextView,ImageView imageView){
             this(v);
             v.setOnClickListener(this);
             mTitleTextView = titleTextView;
-            mDateTextView = dateTextView;
+            mSourceTextView = sourceTextView;
             mTitleImageView = imageView;
             mView = v;
         }
@@ -145,10 +141,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
          */
         public void bindData(NewsItem newsItem){
             mTitleTextView.setText(newsItem.getTitle());
-            //如果日期为空，则尝试使用新闻来源
-            mDateTextView.setText("TODO_date");
-            //图片随机分配
-//            mTitleImageView.setImageDrawable();
+            mSourceTextView.setText(newsItem.getOrigin());
+            mTitleImageView.setImageBitmap(newsItem.getBitmap());
             mNewsItem = newsItem;
         }
 

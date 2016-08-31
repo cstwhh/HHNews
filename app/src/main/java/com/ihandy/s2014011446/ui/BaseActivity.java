@@ -211,7 +211,7 @@ public class BaseActivity extends ActionBarActivity {
         ShareSDK.initSDK(this);
 
         String appHomePage = getString(R.string.app_home_page);
-        String shareText = text != "" ? text : "\n分享自腾飞新闻："+appHomePage;
+        String shareText = text != "" ? text : "\n分享自HHNews："+appHomePage;
 
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权

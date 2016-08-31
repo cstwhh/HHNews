@@ -186,7 +186,8 @@ public class NewsItemBiz {
             e.printStackTrace();
         }
         for(NewsItem newsItem : newsItems) {
-            Log.i("NewsItemBiz", "NewsItemsToString: " + newsItem.toString());git
+            Log.i("NewsItemBiz", "NewsItemsToString: " + newsItem.toString());
+            newsItem.setBitmap();
         }
 
 

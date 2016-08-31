@@ -1,8 +1,18 @@
 package com.ihandy.s2014011446.bean;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Date;
 
 /**
@@ -17,6 +27,7 @@ public class NewsItem {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
     public String getTitle() {
         return title;
     }
@@ -24,7 +35,6 @@ public class NewsItem {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public int getPageNumber() {
         return pageNumber;
@@ -35,12 +45,20 @@ public class NewsItem {
     }
 
     public String getSourceUrl() {
+        if(source.url != null)    sourceUrl = source.url;
         return sourceUrl;
     }
 
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
     }
+
+    public String getImgsUrl() {
+        if(imgs.url != null) imgsUrl = imgs.url;
+        return imgsUrl;
+    }
+
+    public String getOrigin() { return origin; }
 
     @DatabaseField
     private String category;
@@ -66,6 +84,7 @@ public class NewsItem {
     private Date updateTime;
     @DatabaseField
     private int pageNumber;
+    private Bitmap bitmap = null;
 
 
     @Override
@@ -79,5 +98,25 @@ public class NewsItem {
                     ", title=" + title +
                 "}";
     }
+    public void setBitmap() {
+        if (bitmap == null)  {
+            bitmap = generateBitMap(getImgsUrl());
+        }
+    }
+    public Bitmap generateBitMap(String urlStr) {
+        Bitmap bitmap = null;
+        InputStream is = null;
+        Log.i("NewsItem", "getBitMapUrl: " + urlStr);
+        try {
+            URL url = new URL(urlStr);
+            URLConnection conn = url.openConnection();
+            is = conn.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bitmap = BitmapFactory.decodeStream(is);
+        return bitmap;
+    }
+    public Bitmap getBitmap() { return bitmap;}
 
 }
