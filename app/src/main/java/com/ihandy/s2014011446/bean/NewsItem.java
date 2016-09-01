@@ -89,7 +89,7 @@ public class NewsItem {
 
     @Override
     public String toString() {
-        return "NewsContent{" +
+        return "NewsItem{" +
                     "category=" + category +
                     ", imgsUrl=" + imgs.url +
                     ", news_id=" + news_id +

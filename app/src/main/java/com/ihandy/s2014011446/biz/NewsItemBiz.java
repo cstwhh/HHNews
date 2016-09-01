@@ -3,10 +3,8 @@ package com.ihandy.s2014011446.biz;
 import android.content.Context;
 import android.util.Log;
 
-import com.ihandy.s2014011446.bean.NewsContent;
 import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.common.NewsTypes;
-import com.ihandy.s2014011446.dao.NewsContentDao;
 import com.ihandy.s2014011446.dao.NewsItemDao;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.ihandy.s2014011446.utils.StringUtils;
@@ -49,12 +47,10 @@ public class NewsItemBiz {
     private Context mContext;
 
     private NewsItemDao mNewsItemDao;
-    private NewsContentDao mNewsContentDao;
 
     public NewsItemBiz(Context context) {
         mContext = context;
         mNewsItemDao = new NewsItemDao(context);
-        mNewsContentDao = new NewsContentDao(context);
     }
 
     /**
@@ -110,27 +106,6 @@ public class NewsItemBiz {
         this.mNewsItemCache = mNewsItemCache;
     }
 
-//    /**
-//     * 获取新闻内容的数据库缓存
-//     * @param url  地址
-//     * @return  新闻内容缓存
-//     * @throws SQLException
-//     */
-//    public List<NewsContent> getNewsContentCache(String url) throws SQLException {
-//        //如果缓存为空或需要刷新缓存时重新从数据库提取数据
-//
-//        return mNewsContentCache;
-//    }
-//
-//    /**
-//     * 设置缓存
-//     * @param mNewsContentCache
-//     */
-//    public void setNewsContentCache(List<NewsContent> mNewsContentCache) {
-//        this.mNewsContentCache = mNewsContentCache;
-//    }
-
-
     /**
      * 根据新闻类型和页码得到新闻列表
      * @param newsType      新闻URL类型
@@ -164,7 +139,6 @@ public class NewsItemBiz {
             return getNewsItemCache(newsType,currentPage,true);
         }
         Log.i("GETITEM", "getNewsItems: " + url);
-        //Log.i("GETITEM", "getNewsItems: " + jsonStr);
         jsonStr = StringUtils.replaceBlankAndSpace(jsonStr);
 
         String PATTERN = "\"news\":(\\[.*\\])";
@@ -209,83 +183,10 @@ public class NewsItemBiz {
         return newsItems;
 
     }
-
-    /**
-     * 根据新闻的url获取新闻内容
-     * @param url 新闻url
-     * @return
-     */
-    public NewsContent getNewsContent(String url) throws Exception {
-
-        NewsContent content = mNewsContentDao.searchByUrl(url);
-        if (content != null){
-            return content;
-        }
-        //获取html
-        String htmlStr = HttpUtils.doGet(url);
-//        Log.i("ASD","html"+htmlStr);
-        NewsContent news = new NewsContent();
-
-//        Document document = Jsoup.parse(htmlStr);
-////        Log.i("ASD","html"+htmlStr);
-//        //新闻url
-//        news.setUrl(url);
-//
-//        //新闻标题
-//        Element titleElement = document.getElementsByClass(NEWS_TITLE_CLASS).get(0);
-//        Log.i("ASD","Title: "+titleElement.text());
-//        news.setTitle(titleElement.text());
-//
-//        //包含新闻信息的p标签
-//        Element metaElement = document.getElementsByClass(NEWS_META_CLASS).get(0);
-//        Log.i("ASD","metaElement"+metaElement.text());
-//        //新闻时间
-//        news.setDate(StringUtils.getDateFromString(metaElement.text()));
-//        Log.i("ASDDATE","date:  "+StringUtils.getDateFromString(metaElement.text()));
-//
-//        //新闻作者
-//        Element authorElement = document.getElementsByClass(NEWS_META_ITEM_CLASS).get(0);
-//        Log.i("ASD","authorElement"+authorElement.text());
-//        news.setAuthor(authorElement.text());
-//
-//        //新闻来源
-//        Element sourceElement = document.getElementsByClass(NEWS_META_ITEM_CLASS).get(2);
-//        Log.i("ASD","sourceElement"+sourceElement.text());
-//        news.setSource(sourceElement.text());
-//
-//        //新闻内容
-//        Element contentElement = document.getElementsByClass(NEWS_ARTICLE_CLASS).get(0);
-//        Elements contentItems = contentElement.children();
-//        //新闻内容都在p标签内，其中某些是图片
-//        for(Element contentItem : contentItems){
-//
-//            Elements images = contentItem.getElementsByTag("img");
-//            //获取图片
-//            if (images.size() > 0){
-//                for (Element image : images){
-////                    news.addImgUrl(image.attr("src"));
-//                }
-//                continue;
-//            }
-//            if(contentItem.text().trim().length()<=1){
-//                continue;
-//            }
-//            Log.i("ASD","contentText"+contentItem.text() + " length: " + contentItem.text().trim().length());
-//            news.addContent(contentItem.text());
-//
-//        }
-//
-//        //将数据添加进数据库
-        mNewsContentDao.createOrUpdate(news);
-
-        return news;
-    }
-
     /**
      * 清除缓存数据库
      */
     public void clearCache(){
-        mNewsContentDao.deleteAll();
         mNewsItemDao.deleteAll();
     }
 }

@@ -32,13 +32,9 @@ public class NewsTypeBiz {
     private Context mContext;
 
     private NewsTypeDao mNewsTypeDao;
-//    private NewsTypeDao mNewsTypeDao;
-//    private NewsContentDao mNewsContentDao;
 
     public NewsTypeBiz(Context context) {
         mContext = context;
-//        mNewsTypeDao = new NewsTypeDao(context);
-//        mNewsContentDao = new NewsContentDao(context);
     }
     public List<NewsType> getNewsTypes(boolean netAvailable) throws Exception {
 

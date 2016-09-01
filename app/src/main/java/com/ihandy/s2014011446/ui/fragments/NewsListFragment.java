@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ihandy.s2014011446.R;
-import com.ihandy.s2014011446.bean.NewsContent;
 import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.bean.NewsType;
 import com.ihandy.s2014011446.biz.NewsItemBiz;
@@ -128,7 +127,8 @@ public class NewsListFragment extends BaseFragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),new RecyclerItemClickListener.OnItemClickListener() {
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
+                new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
@@ -146,6 +146,7 @@ public class NewsListFragment extends BaseFragment {
 
                         Bundle urlBundle = new Bundle();
                         urlBundle.putString("url",item.getSourceUrl());
+                        urlBundle.putString("title", item.getTitle());
                         startActivityIntent.putExtra("key",urlBundle);
                         ActivityCompat.startActivity(getActivity(), startActivityIntent, options.toBundle());
 

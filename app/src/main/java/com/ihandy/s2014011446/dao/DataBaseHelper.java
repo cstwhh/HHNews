@@ -4,7 +4,6 @@ import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ihandy.s2014011446.bean.NewsContent;
 import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.bean.NewsType;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -25,11 +24,9 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<NewsType,Integer> newsTypeDao = null;
     private Dao<NewsItem,Integer> newsItemDao = null;
-    private Dao<NewsContent,Integer> newsContentDao = null;
 
     private RuntimeExceptionDao<NewsType,Integer> newsTypeRuntimeDao = null;
     private RuntimeExceptionDao<NewsItem,Integer> newsItemRuntimeDao = null;
-    private RuntimeExceptionDao<NewsContent,Integer> newsContentRuntimeDao = null;
 
 
     private static DataBaseHelper helper = null;
@@ -55,11 +52,10 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
         try {
 
-            TableUtils.createTable(connectionSource, NewsContent.class);
+            TableUtils.createTable(connectionSource, NewsType.class);
             TableUtils.createTable(connectionSource, NewsItem.class);
 
             newsItemDao = getNewsItemDao();
-            newsContentDao = getNewsContentDao();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +68,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
         try {
             TableUtils.dropTable(connectionSource, NewsItem.class, true);
-            TableUtils.dropTable(connectionSource, NewsContent.class, true);
+            TableUtils.dropTable(connectionSource, NewsType.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,19 +88,6 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         return newsTypeDao;
     }
 
-    public Dao<NewsContent, Integer> getNewsContentDao() throws SQLException {
-        if (newsContentDao == null){
-            newsContentDao = getDao(NewsContent.class);
-        }
-        return newsContentDao;
-    }
-
-    public RuntimeExceptionDao<NewsContent, Integer> getNewsContentRuntimeDao() {
-        if (newsContentRuntimeDao == null){
-            newsContentRuntimeDao = getRuntimeExceptionDao(NewsContent.class);
-        }
-        return newsContentRuntimeDao;
-    }
 
     public RuntimeExceptionDao<NewsItem, Integer> getNewsItemRuntimeDao() {
         if (newsItemRuntimeDao == null){

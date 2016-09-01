@@ -2,7 +2,6 @@ package com.ihandy.s2014011446.dao;
 
 import android.content.Context;
 
-import com.ihandy.s2014011446.bean.NewsContent;
 import com.ihandy.s2014011446.bean.NewsItem;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;

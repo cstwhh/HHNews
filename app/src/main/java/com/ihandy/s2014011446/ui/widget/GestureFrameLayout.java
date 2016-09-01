@@ -69,7 +69,7 @@ public class GestureFrameLayout extends FrameLayout  {
                     float endX = e2.getX();
                     float x = endX - startX;
 
-                    if( x > -5 ){
+                    if( x > 120 && Math.abs(velocityX) > 50){
                         scrollRight();
                         isFinish = true;
                     }else{

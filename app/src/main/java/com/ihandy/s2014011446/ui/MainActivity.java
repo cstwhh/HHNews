@@ -227,21 +227,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mFragmentList = new ArrayList<NewsListFragment>();
 
-        //初始化fragment
-//        NewsListFragment fragment1 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XXYW);
-//        NewsListFragment fragment2 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_XYKX);
-//        NewsListFragment fragment3 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_KJDT);
-//        NewsListFragment fragment4 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_MTJJ);
-//        NewsListFragment fragment5 = NewsListFragment.newInstance(NewsTypes.NEWS_TPYE_BMXW);
-//
-//        mFragmentList.add(fragment1);
-//        mFragmentList.add(fragment2);
-//        mFragmentList.add(fragment3);
-//        mFragmentList.add(fragment4);
-//        mFragmentList.add(fragment5);
-
         getFragmenList(mFragmentList, false);
-        //初始化ViewPager
 
     }
 

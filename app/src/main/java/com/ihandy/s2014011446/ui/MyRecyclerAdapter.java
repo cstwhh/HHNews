@@ -17,11 +17,6 @@ import com.ihandy.s2014011446.bean.NewsItem;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-/**
- *
- */
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>{
 
@@ -38,11 +33,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
 
     public MyRecyclerAdapter(Context context, List<NewsItem> myDataset){
-
         mNewsList = myDataset != null ? myDataset : new ArrayList<NewsItem>();
-//        Random random = new Random();
-//        int i = random.nextInt(4);
-//        setmDrawble(context.getResources().getDrawable(getImageId(i)));
     }
 
     public List<NewsItem> getmNewsList() {
@@ -53,26 +44,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         Log.i("LIXU", "adapter" + mNewsList.size());
     }
 
-
-    public void setmDrawble(Drawable mDrawble) {
-        if (this.mDrawble == null) {
-            this.mDrawble = mDrawble;
-        }
-    }
-    private int getImageId(int id){
-        int num = id % 4;
-        switch (num){
-            case 0:
-                return R.drawable.materialdesign_pic_1;
-            case 1:
-                return R.drawable.materialdesign_pic_2;
-            case 2:
-                return R.drawable.materialdesign_pic_3;
-            case 3:
-                return R.drawable.materialdesign_pic_4;
-        }
-        return R.drawable.materialdesign_pic_1;
-    }
 
     /**
      * 创建ViewHolder
