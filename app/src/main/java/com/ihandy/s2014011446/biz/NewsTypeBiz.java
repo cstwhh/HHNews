@@ -35,6 +35,7 @@ public class NewsTypeBiz {
 
     public NewsTypeBiz(Context context) {
         mContext = context;
+        mNewsTypeDao = new NewsTypeDao(context);
     }
     public List<NewsType> getNewsTypes(boolean netAvailable) throws Exception {
 
@@ -42,7 +43,7 @@ public class NewsTypeBiz {
         //有网络时查看数据是否过期,未过期则返回缓存数据
         //若数据已过期，则重新获取
 
-        String url = "http://assignment.crazz.cn/news/en/category?timestamp=" + System.currentTimeMillis();
+        String url = NewsAPIUtils.getTypeUrl();
         Log.i(getClass().getName(), "url: " + url);
         String jsonStr = null;
         //如果服务器未返回数据,则返回数据库中的数据
@@ -74,6 +75,7 @@ public class NewsTypeBiz {
             newsType.setExist(true);
             newsType.setUpdateTime(new Date());
             newsTypes.add(newsType);
+            mNewsTypeDao.createOrUpdate(newsType);
         }
 
         return newsTypes;

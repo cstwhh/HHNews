@@ -56,6 +56,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, NewsItem.class);
 
             newsItemDao = getNewsItemDao();
+            newsTypeDao = getNewsTypeDao();
 
         } catch (SQLException e) {
             e.printStackTrace();

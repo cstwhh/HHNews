@@ -30,33 +30,17 @@ public class NewsItemDao {
         mNewsItemDao.createOrUpdate(newsItem);
     }
 
+    public List<NewsItem> getCache(String newsType)  throws SQLException {
 
-    /**
-     * 按照标题删除
-     * @param   title 需要删除的新闻项的标题
-     * @return
-     * @throws SQLException
-     */
-    public int deleteByTitle(String title) throws SQLException {
-
-        DeleteBuilder<NewsItem, Integer> deleteBuilder = mNewsItemDao.deleteBuilder();
-        deleteBuilder.where().eq("title",title);
-        return deleteBuilder.delete();
-
-    }
-
-    /**
-     * 按照url删除
-     * @param   url 需要删除的新闻项的url
-     * @return
-     * @throws SQLException
-     */
-    public int deleteByUrl(String url) throws SQLException {
-
-        DeleteBuilder<NewsItem, Integer> deleteBuilder = mNewsItemDao.deleteBuilder();
-        deleteBuilder.where().eq("url",url);
-        return deleteBuilder.delete();
-
+        List<NewsItem> newsItems = mNewsItemDao.queryBuilder().where()
+                .eq("category",newsType).query();
+        if (newsItems.size() > 0) {
+            for(NewsItem newsItem : newsItems)    {
+                newsItem.generateBitmapFromCache();
+            }
+            return newsItems;
+        }
+        return null;
     }
 
     public void deleteAll(){
@@ -68,53 +52,4 @@ public class NewsItemDao {
         List<NewsItem> news = mNewsItemDao.queryForAll();
         return news;
     }
-
-    /**
-     * 按照标题查询
-     * @param title
-     * @return
-     * @throws SQLException
-     */
-    public NewsItem searchByTitle(String title) throws SQLException {
-
-        List<NewsItem> newsItems = mNewsItemDao.queryBuilder().where().eq("title",title).query();
-        if (newsItems.size() > 0){
-            return newsItems.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * 按照页码和类型查询
-     * @param page
-     * @param type
-     * @return
-     * @throws SQLException
-     */
-    public List<NewsItem> searchByPageAndType(int page,int type) throws SQLException {
-
-        List<NewsItem> newsItems = mNewsItemDao.queryBuilder().where().eq("pageNumber",page).and()
-                .eq("type",type).query();
-        if (newsItems.size() > 0){
-            return newsItems;
-        }
-        return null;
-    }
-
-    /**
-     * 按照url查询
-     * @param url
-     * @return
-     * @throws SQLException
-     */
-    public NewsItem searchByUrl(String url) throws SQLException {
-
-        List<NewsItem> newsItems = mNewsItemDao.queryBuilder().where().eq("url",url).query();
-        if (newsItems.size() > 0){
-            return newsItems.get(0);
-        }
-        return null;
-
-    }
-
 }

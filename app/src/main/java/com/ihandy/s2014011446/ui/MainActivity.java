@@ -272,15 +272,6 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         protected List<NewsType> doInBackground(Integer... currentPage) {
 
             try {
-                //TODO
-//                boolean netAvailable = HttpUtils.IsNetAvailable(getActivity());
-//                //如果当前是第一次加载，则直接从数据库读取
-//                if (netAvailable && mIsFirstLoad){
-//                    mIsFirstLoad = false;
-//                    mNewsTypeBiz.getNewsTypes(true);
-//                    return mNewsItemBiz.getNewsItemCache(mNewsType, currentPage[0], true);
-//                }
-//                return mNewsItemBiz.getNewsItems(mNewsType, currentPage[0],netAvailable);
                 NewsTypeBiz mNewsTypeBiz = new NewsTypeBiz(MainActivity.this);
                 return mNewsTypeBiz.getNewsTypes(true);
             } catch (Exception e) {
@@ -303,16 +294,11 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
                         , Toast.LENGTH_LONG).show();
                 return;
             }
-            //处理强制刷新
-//            TODO
-//            if (mIsForced) {
-//                mAdapter.getmNewsList().clear();
-//            }
             mNewsTypes.addAll(newsTypes);
             for(NewsType newsType : newsTypes) {
                 NewsListFragment fragment = NewsListFragment.newInstance(newsType);
                 mFragmentList.add(fragment);
-                Log.i(getClass().getName(), "Add UrlType: " + newsType.getUrlType());
+                Log.i(getClass().getName(), "Add Type: " + newsType.getUrlType());
             }
 
             MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(), mFragmentList);

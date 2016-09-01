@@ -63,8 +63,6 @@ public class NewsListFragment extends BaseFragment {
 
     //是否为第一次加载数据
     private boolean mIsFirstLoad = true;
-
-    //缓存
     private List<NewsItem> mNewsItems = new ArrayList<NewsItem>();
 
     public NewsListFragment() {
@@ -172,14 +170,15 @@ public class NewsListFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = ((LinearLayoutManager)mLayoutManager).findLastVisibleItemPosition();
                 int totalItem = mLayoutManager.getItemCount();
-                //当剩下2个item时加载下一页
-                if(lastVisibleItem > totalItem - 2 && dy > 0){
-                    int loadPage= mNewsItems.get(mNewsItems.size()-1).getPageNumber() + 1;
-                    if (mCurrentPage < loadPage) {
-                        mCurrentPage = loadPage;
-                        getNewsList(mAdapter, mCurrentPage, false);
-                    }
-                }
+//                当剩下2个item时加载下一页
+//                TODO 服务器有问题，type的更新以及max_news_id都需要进行调试
+//                if(lastVisibleItem > totalItem - 2 && dy > 0){
+//                    int loadPage= mNewsItems.get(mNewsItems.size()-1).getPageNumber() + 1;
+//                    if (mCurrentPage < loadPage) {
+//                        mCurrentPage = loadPage;
+//                        getNewsList(mAdapter, mCurrentPage, false);
+//                    }
+//                }
             }
         });
 }
@@ -202,18 +201,6 @@ public class NewsListFragment extends BaseFragment {
      * @param forced      是否强制刷新
      */
     private void getNewsList(MyRecyclerAdapter adapter,int currentPage,boolean forced) {
-        int total = mNewsItems.size();
-        //不强制刷新时，如果此页已存在则直接从内存中加载
-        if (!forced && total>0 &&
-                (mNewsItems.get(total-1).getPageNumber() >= currentPage) ){
-            mAdapter.addNews(mNewsItems);
-            mAdapter.notifyDataSetChanged();
-            return;
-        }
-
-        if(forced && mNewsItems.size()>0){
-            mNewsItems.clear();
-        }
         LoadNewsListTask loadDataTask = new LoadNewsListTask(adapter,mNewsUrlType,forced);
         loadDataTask.execute(currentPage);
     }
@@ -248,12 +235,14 @@ public class NewsListFragment extends BaseFragment {
             try {
 
                 boolean netAvailable = HttpUtils.IsNetAvailable(getActivity());
-                //如果当前是第一次加载，则直接从数据库读取
-                if (netAvailable && mIsFirstLoad){
-                    mIsFirstLoad = false;
-                    return mNewsItemBiz.getNewsItemCache(mNewsType, currentPage[0], true);
+                //netAvailable = false;
+                Log.i("test-net-available", "doInBackground: netAvailable:" + netAvailable);
+                if (!netAvailable){
+//                    Toast.makeText(getActivity(),"没有网络，即将载入缓存..."
+//                            ,Toast.LENGTH_LONG).show();
+                    return mNewsItemBiz.getNewsItemCache(mNewsType, currentPage[0]);
                 }
-                return mNewsItemBiz.getNewsItems(mNewsType, currentPage[0],netAvailable);
+                return mNewsItemBiz.getNewsItems(mNewsType, currentPage[0]);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i("ASDNET","neterror :"+e);
@@ -270,17 +259,18 @@ public class NewsListFragment extends BaseFragment {
         protected void onPostExecute(List<NewsItem> newsItems) {
             if (newsItems == null) {
                 Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.net_unavaiable)
-                        ,Toast.LENGTH_LONG).show();
+                        ,Toast.LENGTH_SHORT).show();
                 return;
             }
-            //处理强制刷新
             if(mIsForced){
                 mAdapter.getmNewsList().clear();
             }
-            mNewsItems.addAll(newsItems);
             mAdapter.addNews(newsItems);
             mAdapter.notifyDataSetChanged();
             frame.refreshComplete();
+            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.net_avaiable)
+                    ,Toast.LENGTH_SHORT).show();
+//            mNewsItems.addAll(newsItems);
         }
 
         @Override
