@@ -45,11 +45,12 @@ public class NewsItem {
         this.sourceUrl = sourceUrl;
     }
 
-    public void setImgsUrl(String imgsUrl) {
-        this.imgsUrl = imgsUrl;
-    }
+    public void obtainImgsUrl() {imgsUrl = imgs.url;}
     public String getImgsUrl() {
         return imgs.url;
+    }
+    public void setImgsUrl(String imgsUrl) {
+        this.imgsUrl = imgsUrl;
     }
     public String getOrigin() { return origin; }
 
