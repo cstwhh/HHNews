@@ -62,6 +62,10 @@ import com.umeng.update.UmengUpdateAgent;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.header.MaterialHeader;
+
 import static android.support.v7.widget.RecyclerView.*;
 
 
@@ -79,6 +83,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     private View mAppSetting;
     private View mAboutButton;
     private View mShareButton;
+    private View mCategoryManagement;
     private View mFeedBackButton;
 
     private MaterialMenuIconToolbar mMaterialMenu;
@@ -191,12 +196,20 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
                 //resume the click
             }
         });
-        //设置
-        mAppSetting = (ViewGroup) findViewById(R.id.bottom_drawer);
-        mAppSetting.setOnClickListener(new OnClickListener() {
+        //分享
+        mShareButton = findViewById(R.id.drawer_item_share);
+        mShareButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string));
+            }
+        });
+        //Category Management
+        mCategoryManagement = findViewById(R.id.drawer_category_management);
+        mCategoryManagement.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CategoryManagementActivity.class);
                 startActivity(intent);
             }
         });
@@ -209,15 +222,15 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
                 startActivity(intent);
             }
         });
-        //分享
-        mShareButton = findViewById(R.id.drawer_item_share);
-        mShareButton.setOnClickListener(new OnClickListener() {
+        //设置
+        mAppSetting = (ViewGroup) findViewById(R.id.bottom_drawer);
+        mAppSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string));
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
             }
         });
-
     }
 
     private void initViewPager() {
@@ -227,7 +240,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mFragmentList = new ArrayList<NewsListFragment>();
 
-        getFragmenList(mFragmentList, false);
+        getFragmenList(mFragmentList, true);
 
     }
 

@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/view_margin"
             android:textSize="@dimen/text_size_normal"
-            android:text="此应用为熟悉最新设计规范以及新开发环境所做，源代码开源，GitHub地址：https://github.com/sues-lee/SuesNews 欢迎大家Star"
+            android:text="此应用为熟悉最新设计规范以及新开发环境所做，源代码开源"
             android:autoLink="all|web"
             />
         <TextView

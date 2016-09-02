@@ -68,8 +68,10 @@ dependencies {
     compile files('libs/umeng-update-v2.6.0.jar')
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'asia.ivity.android:drag-sort-listview:1.0'
 }
 repositories {
+    mavenCentral()
     jcenter()
     //友盟用户反馈
     maven { url "https://raw.githubusercontent.com/umeng/mvn-repo-umeng/master/repository" }

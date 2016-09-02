@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 public class FileUtils {
     /**
@@ -63,6 +64,7 @@ public class FileUtils {
         bitmap.compress(CompressFormat.JPEG, 100, fos);
         fos.flush();
         fos.close();
+        Log.i("FileUtils", "savaBitmapToFile: " + path + File.separator + fileName);
     }
 
     /**
@@ -109,5 +111,8 @@ public class FileUtils {
         }
 
         dirFile.delete();
+    }
+    public String getUrlPathName(String url) {
+        return url.replaceAll("[^\\w]", "");
     }
 }

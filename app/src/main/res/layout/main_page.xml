@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize">
 
-
         <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabs"
             android:layout_width="match_parent"
@@ -21,8 +20,9 @@
             android:background="?attr/colorPrimary"
             android:textSize="@dimen/text_size_normal"
             app:pstsIndicatorColor="?attr/colorAccent"
-            app:pstsShouldExpand="true"
-            />
+            app:pstsShouldExpand="true">
+
+            </com.astuetz.PagerSlidingTabStrip>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"

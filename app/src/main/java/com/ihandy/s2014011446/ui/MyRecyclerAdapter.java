@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.ihandy.s2014011446.R;
+import com.ihandy.s2014011446.utils.FileUtils;
 import com.ihandy.s2014011446.bean.NewsItem;
 
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,6 +36,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
     // 图片缓存技术的核心类，用于缓存所有下载好的图片，在程序内存达到设定值时会将最少最近使用的图片移除掉
     private LruCache<String, Bitmap> mMemoryCache;
+    private FileUtils fileUtils;
 
 
     public MyRecyclerAdapter(Context context){
@@ -55,6 +57,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 return bitmap.getByteCount();
             }
         };
+        fileUtils = new FileUtils(context);
     }
 
     public List<NewsItem> getmNewsList() {
@@ -132,7 +135,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         private void loadBitmaps(NewsItem newsItem) {
             String imageUrl = newsItem.getImgsUrl();
             try {
-                Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
+                //get from memory or file
+                Bitmap bitmap = getBitmapFromCache(imageUrl);
                 if (bitmap == null) {
                     BitmapWorkerTask task = new BitmapWorkerTask(newsItem, mTitleImageView);
                     taskCollection.add(task);
@@ -150,13 +154,21 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             }
         }
 
-        /**
-         * 从LruCache中获取一张图片，如果不存在就返回null。
-         *
-         * @param key
-         *            LruCache的键，这里传入图片的URL地址。
-         * @return 对应传入键的Bitmap对象，或者null。
-         */
+        public Bitmap getBitmapFromCache(String url) {
+            Bitmap bitmap = getBitmapFromMemoryCache(url);
+            String urlPathName = fileUtils.getUrlPathName(url);
+            if(bitmap != null){
+                return bitmap;
+            }else if(fileUtils.isFileExists(urlPathName) && fileUtils.getFileSize(urlPathName) != 0){
+                //从SD卡获取手机里面获取Bitmap
+                bitmap = fileUtils.getBitmap(urlPathName);
+                //将Bitmap 加入内存缓存
+                addBitmapToMemoryCache(url, bitmap);
+                return bitmap;
+            }
+            return null;
+        }
+
         public Bitmap getBitmapFromMemoryCache(String key) {
             return mMemoryCache.get(key);
         }
@@ -186,6 +198,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 Bitmap bitmap = downloadBitmap(params[0]);
                 if (bitmap != null) {
                     addBitmapToMemoryCache(params[0], bitmap);
+                    try {
+                        //保存在SD卡或者手机目录
+                        fileUtils.savaBitmap(fileUtils.getUrlPathName(params[0]), bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return bitmap;
             }

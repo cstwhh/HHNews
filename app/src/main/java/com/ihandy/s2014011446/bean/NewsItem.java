@@ -43,9 +43,7 @@ public class NewsItem {
     }
 
     public void obtainImgsUrl() {imgsUrl = imgs.url;}
-    public String getImgsUrl() {
-        return imgs.url;
-    }
+    public String getImgsUrl() {return imgsUrl;}
     public void setImgsUrl(String imgsUrl) {this.imgsUrl = imgsUrl;}
 
     public String getOrigin() { return origin; }

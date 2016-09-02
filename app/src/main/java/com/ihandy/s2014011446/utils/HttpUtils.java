@@ -61,7 +61,7 @@ public class HttpUtils {
                 return baos.toString();
             } else
             {
-                throw new RuntimeException(" responseCode is not 200 ... ");
+                throw new RuntimeException(" responseCode is not 200 ... " + urlStr);
             }
 
         } catch (Exception e)

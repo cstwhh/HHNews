@@ -85,12 +85,12 @@ public class NewsItemBiz {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int i = 0;
+        //int i = 0;
         for(NewsItem newsItem : newsItems) {
 
             //DEBUG
-            newsItem.setTitle("" + i);
-            ++i;
+//            newsItem.setTitle("" + i);
+//            ++i;
 
             //从JSON得到的初始化对象，进一步对需要保存的值进行赋值
             newsItem.obtainImgsUrl();
