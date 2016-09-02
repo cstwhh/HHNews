@@ -21,18 +21,22 @@ import java.util.Date;
  * 新闻实体类
  */
 public class NewsItem {
+
     public String getTitle() {
         return title;
     }
     public void setTitle(String title) {
         this.title = title;
     }
+
     public int getPageNumber() {
         return pageNumber;
     }
     public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
     }
+
+    public void obtainSourceUrl() {sourceUrl = source.url;}
     public String getSourceUrl() {
         if(source.url != null)    sourceUrl = source.url;
         return sourceUrl;
@@ -40,7 +44,10 @@ public class NewsItem {
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
     }
-    public void obtainSourceUrl() {sourceUrl = source.url;}
+
+    public void setImgsUrl(String imgsUrl) {
+        this.imgsUrl = imgsUrl;
+    }
     public String getImgsUrl() {
         return imgs.url;
     }
@@ -49,10 +56,14 @@ public class NewsItem {
 
     @DatabaseField
     private String category;
+
+
     class Imgs {
         String url;
     }
     private Imgs imgs;
+    @DatabaseField
+    private String imgsUrl;
     @DatabaseField(id = true)
     private String news_id;
     @DatabaseField
@@ -67,25 +78,7 @@ public class NewsItem {
     private String title;
     @DatabaseField
     private int pageNumber;
-    //@DatabaseField
-    String imageBytesString;
     private Bitmap bitmap = null;
-
-    public void generateImageBytesForSave()
-    {
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        setBitmap();
-        Bitmap bitmap = getBitmap();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        imageBytesString = new String(baos.toByteArray());
-        imageBytesString = "hello";
-    }
-    public void generateBitmapFromCache()
-    {
-//        byte[] imageBytes = imageBytesString.getBytes();
-//        bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-    }
 //
 //    @Override
 //    public String toString() {

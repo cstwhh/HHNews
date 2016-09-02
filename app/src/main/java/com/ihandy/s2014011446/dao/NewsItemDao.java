@@ -35,9 +35,6 @@ public class NewsItemDao {
         List<NewsItem> newsItems = mNewsItemDao.queryBuilder().where()
                 .eq("category",newsType).query();
         if (newsItems.size() > 0) {
-            for(NewsItem newsItem : newsItems)    {
-                newsItem.generateBitmapFromCache();
-            }
             return newsItems;
         }
         return null;
