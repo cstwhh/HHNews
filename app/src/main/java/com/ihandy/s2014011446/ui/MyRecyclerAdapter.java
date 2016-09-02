@@ -58,7 +58,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         TextView titleTextView = (TextView) v.findViewById(R.id.titleTextView);
         TextView sourceTextView = (TextView) v.findViewById(R.id.sourceTextView);
         ImageView titleImageView = (ImageView) v.findViewById(R.id.titleImageView);
-        //titleImageView.setImageDrawable(mDrawble);
         return new ViewHolder(v,titleTextView,sourceTextView,titleImageView);
     }
 
@@ -69,9 +68,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
      */
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.mTitleTextView.setText(mNewsList.get(i).getTitle());
-        viewHolder.mSourceTextView.setText(mNewsList.get(i).getOrigin());
-        viewHolder.mTitleImageView.setImageBitmap(mNewsList.get(i).getBitmap());
+//        viewHolder.mTitleTextView.setText(mNewsList.get(i).getTitle());
+//        viewHolder.mSourceTextView.setText(mNewsList.get(i).getOrigin());
+//        viewHolder.mTitleImageView.setImageBitmap(mNewsList.get(i).getBitmap());
         viewHolder.bindData(mNewsList.get(i));
     }
 
@@ -113,7 +112,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public void bindData(NewsItem newsItem){
             mTitleTextView.setText(newsItem.getTitle());
             mSourceTextView.setText(newsItem.getOrigin());
-            mTitleImageView.setImageBitmap(newsItem.getBitmap());
+           // mTitleImageView.setImageBitmap(newsItem.getBitmap());
             mNewsItem = newsItem;
         }
 

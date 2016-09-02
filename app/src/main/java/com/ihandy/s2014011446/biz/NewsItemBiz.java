@@ -87,8 +87,8 @@ public class NewsItemBiz {
         }
         for(NewsItem newsItem : newsItems) {
 //            Log.i("NewsItemBiz", "NewsItemsToString: " + newsItem.toString());
-            newsItem.setBitmap();
-            newsItem.generateImageBytesForSave();
+//            newsItem.setBitmap();
+//            newsItem.generateImageBytesForSave();
             mNewsItemDao.createOrUpdate(newsItem);
         }
 
