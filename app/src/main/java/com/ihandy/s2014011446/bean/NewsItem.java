@@ -37,10 +37,7 @@ public class NewsItem {
     }
 
     public void obtainSourceUrl() {sourceUrl = source.url;}
-    public String getSourceUrl() {
-        if(source.url != null)    sourceUrl = source.url;
-        return sourceUrl;
-    }
+    public String getSourceUrl() {return sourceUrl;}
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
     }
@@ -49,36 +46,36 @@ public class NewsItem {
     public String getImgsUrl() {
         return imgs.url;
     }
-    public void setImgsUrl(String imgsUrl) {
-        this.imgsUrl = imgsUrl;
-    }
+    public void setImgsUrl(String imgsUrl) {this.imgsUrl = imgsUrl;}
+
     public String getOrigin() { return origin; }
 
 
     @DatabaseField
     private String category;
 
-
-    class Imgs {
-        String url;
-    }
+    class Imgs {String url;}
     private Imgs imgs;
     @DatabaseField
     private String imgsUrl;
+
     @DatabaseField(id = true)
     private String news_id;
+
     @DatabaseField
     private String origin;
-    class Source {
-        String url;
-    }
+
+    class Source {String url;}
     private Source source;
     @DatabaseField
     private String sourceUrl;
+
     @DatabaseField
     private String title;
+
     @DatabaseField
     private int pageNumber;
+
     private Bitmap bitmap = null;
 //
 //    @Override

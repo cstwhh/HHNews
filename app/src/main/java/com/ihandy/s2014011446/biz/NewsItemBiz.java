@@ -87,11 +87,15 @@ public class NewsItemBiz {
         }
         int i = 0;
         for(NewsItem newsItem : newsItems) {
+
+            //DEBUG
             newsItem.setTitle("" + i);
             ++i;
-//            Log.i("NewsItemBiz", "NewsItemsToString: " + newsItem.toString());
-//            newsItem.setBitmap();
-//            newsItem.generateImageBytesForSave();
+
+            //从JSON得到的初始化对象，进一步对需要保存的值进行赋值
+            newsItem.obtainImgsUrl();
+            newsItem.obtainSourceUrl();
+
             mNewsItemDao.createOrUpdate(newsItem);
         }
 
