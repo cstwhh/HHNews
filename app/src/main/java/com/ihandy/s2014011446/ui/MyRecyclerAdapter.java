@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.ihandy.s2014011446.R;
 import com.ihandy.s2014011446.bean.NewsItem;
 
@@ -18,7 +19,7 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>{
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
 
     //当前显示的数据
     private List<NewsItem> mNewsList = new ArrayList<NewsItem>();
@@ -44,7 +45,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         Log.i("LIXU", "adapter" + mNewsList.size());
     }
 
-
     /**
      * 创建ViewHolder
      * @param viewGroup 父View
@@ -60,7 +60,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         ImageView titleImageView = (ImageView) v.findViewById(R.id.titleImageView);
         return new ViewHolder(v,titleTextView,sourceTextView,titleImageView);
     }
-
     /**
      * 将数据绑定到ViewHolder
      * @param viewHolder    要绑定的ViewHolder
@@ -68,9 +67,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
      */
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-//        viewHolder.mTitleTextView.setText(mNewsList.get(i).getTitle());
-//        viewHolder.mSourceTextView.setText(mNewsList.get(i).getOrigin());
-//        viewHolder.mTitleImageView.setImageBitmap(mNewsList.get(i).getBitmap());
         viewHolder.bindData(mNewsList.get(i));
     }
 
@@ -112,7 +108,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public void bindData(NewsItem newsItem){
             mTitleTextView.setText(newsItem.getTitle());
             mSourceTextView.setText(newsItem.getOrigin());
-           // mTitleImageView.setImageBitmap(newsItem.getBitmap());
+            newsItem.setBitmap();
+            mTitleImageView.setImageBitmap(newsItem.getBitmap());
             mNewsItem = newsItem;
         }
 

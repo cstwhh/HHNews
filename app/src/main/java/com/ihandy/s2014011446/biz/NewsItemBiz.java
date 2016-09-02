@@ -85,7 +85,10 @@ public class NewsItemBiz {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        int i = 0;
         for(NewsItem newsItem : newsItems) {
+            newsItem.setTitle("" + i);
+            ++i;
 //            Log.i("NewsItemBiz", "NewsItemsToString: " + newsItem.toString());
 //            newsItem.setBitmap();
 //            newsItem.generateImageBytesForSave();

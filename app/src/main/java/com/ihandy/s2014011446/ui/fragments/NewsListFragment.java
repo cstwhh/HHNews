@@ -158,7 +158,7 @@ public class NewsListFragment extends BaseFragment {
         //得到数据
         getNewsList(mAdapter, 0, false);
 
-        //监听list滑动事件
+//        监听list滑动事件
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -168,8 +168,11 @@ public class NewsListFragment extends BaseFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager)mLayoutManager).findLastVisibleItemPosition();
-                int totalItem = mLayoutManager.getItemCount();
+                int firstVisibleItemPositon = ((LinearLayoutManager)mLayoutManager).findFirstVisibleItemPosition();
+                int lastVisibleItemPositon = ((LinearLayoutManager)mLayoutManager).findLastVisibleItemPosition();
+                Log.i("NewsList", "onScrolled:visible " + firstVisibleItemPositon + "," + lastVisibleItemPositon);
+               // mAdapter.bindViewHolderData(firstVisibleItemPositon, lastVisibleItemPositon);
+ //               int totalItem = mLayoutManager.getItemCount();
 //                当剩下2个item时加载下一页
 //                TODO 服务器有问题，type的更新以及max_news_id都需要进行调试
 //                if(lastVisibleItem > totalItem - 2 && dy > 0){
