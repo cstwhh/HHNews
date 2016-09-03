@@ -6,10 +6,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.ihandy.s2014011446.R;
+import com.ihandy.s2014011446.bean.NewsItem;
+import com.ihandy.s2014011446.bean.NewsType;
+import com.ihandy.s2014011446.dao.NewsTypeDao;
 import com.ihandy.s2014011446.ui.widget.MyDragSortListViewAdapter;
 import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.RemoveListener;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,8 @@ public class CategoryManagementActivity  extends BaseActivity {
     private List<String> watchCategory;
     private List<String> unwatchCategory;
 
+    private NewsTypeDao mNewsTypeDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +44,27 @@ public class CategoryManagementActivity  extends BaseActivity {
             public void onClick(View view) {
                 CategoryManagementActivity.this.finish();
                 Log.i("drag", "watchCategory is: ");
-                for(String s : watchCategory)
-                    Log.i("drag", s);
+                for(int i = 0; i < watchCategory.size(); ++i) {
+                    Log.i("drag", watchCategory.get(i));
+                    try {
+                        NewsType newsType= mNewsTypeDao.searchByUrlType(watchCategory.get(i));
+                        newsType.setShowOrder(i);
+                        mNewsTypeDao.createOrUpdate(newsType);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Log.i("drag", "unwatchCategory is: ");
-                for(String s : unwatchCategory)
-                    Log.i("drag", s);
+                for(int i = 0; i < unwatchCategory.size(); ++i) {
+                    Log.i("drag", unwatchCategory.get(i));
+                    try {
+                        NewsType newsType= mNewsTypeDao.searchByUrlType(unwatchCategory.get(i));
+                        newsType.setShowOrder(-1);
+                        mNewsTypeDao.createOrUpdate(newsType);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Log.i("drag", "***********************");
             }
         });
@@ -110,9 +132,13 @@ public class CategoryManagementActivity  extends BaseActivity {
     private void initData() {//初始化
         watchCategory=new ArrayList<String>();
         unwatchCategory=new ArrayList<String>();
-        for(int i=0;i<4;i++){
-            watchCategory.add("watched:"+i);
-            unwatchCategory.add("unwatched:" + i);
+        mNewsTypeDao = new NewsTypeDao(CategoryManagementActivity.this);
+        List<NewsType> allNewsType = mNewsTypeDao.queryAll();
+        for(NewsType newsType : allNewsType) {
+            if(newsType.getShowOrder() >= 0)
+                watchCategory.add(newsType.getUrlType());
+            else
+                unwatchCategory.add(newsType.getUrlType());
         }
         watchListView = (DragSortListView) findViewById(R.id.dslvWatchList);
         unwatchListView = (DragSortListView) findViewById(R.id.dslvUnwatchList);

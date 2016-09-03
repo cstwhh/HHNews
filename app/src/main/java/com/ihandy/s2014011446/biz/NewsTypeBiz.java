@@ -73,7 +73,8 @@ public class NewsTypeBiz {
             newsType.setUrlType(m.group(1));
             newsType.setShowType(m.group(2));
             newsType.setExist(true);
-            newsType.setUpdateTime(new Date());
+            //TODO
+            newsType.setShowOrder(1);
             newsTypes.add(newsType);
             mNewsTypeDao.createOrUpdate(newsType);
         }

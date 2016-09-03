@@ -14,11 +14,9 @@ public class NewsType {
     @DatabaseField
     private String showType;
     @DatabaseField
-    private boolean isView; //whether user like read this type
+    private int showOrder; //whether user like read this type
     @DatabaseField
     private boolean isExist;    //最新一次中是否存在
-    @DatabaseField(canBeNull = false)
-    private Date updateTime;//更新时间
 
     public String getUrlType() {
         return urlType;
@@ -36,13 +34,6 @@ public class NewsType {
         this.showType = showType;
     }
 
-    public boolean isView() {
-        return isView;
-    }
-
-    public void setView(boolean view) {
-        isView = view;
-    }
 
     public boolean isExist() {
         return isExist;
@@ -52,20 +43,13 @@ public class NewsType {
         isExist = exist;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+
+    public int getShowOrder() {
+        return showOrder;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setShowOrder(int showOrder) {
+        this.showOrder = showOrder;
     }
 
-//
-//    public String getType() {
-//        return type;
-//    }
-//
-//    public void setType(String type) {
-//        this.type = type;
-//    }
 }

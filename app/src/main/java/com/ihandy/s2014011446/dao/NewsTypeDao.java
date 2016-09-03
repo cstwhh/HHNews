@@ -37,5 +37,15 @@ public class NewsTypeDao {
         return news;
     }
 
+    public NewsType searchByUrlType(String urlType) throws SQLException {
+
+        List<NewsType> newsTypes = mNewsTypeDao.queryBuilder().where().eq("urlType",urlType).query();
+        if (newsTypes.size() > 0){
+            return newsTypes.get(0);
+        }
+        return null;
+
+    }
+
 
 }

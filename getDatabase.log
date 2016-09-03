@@ -1,4 +1,4 @@
-adb shell
+ ~/Android/Sdk/platform-tools/adb shell
 su 
 cp -r data/data/com.ihandy.s2014011446/databases /mnt/sdcard/database_tmp
 
