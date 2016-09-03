@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     private View mAppSetting;
     private View mAboutButton;
     private View mShareButton;
+    private View mFavoriteButton;
     private View mCategoryManagement;
     private View mFeedBackButton;
 
@@ -202,6 +203,15 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
             @Override
             public void onClick(View view) {
                 showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string));
+            }
+        });
+        //Favorite
+        mFavoriteButton = findViewById(R.id.drawer_item_favorite);
+        mFavoriteButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                startActivity(intent);
             }
         });
         //Category Management

@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.ihandy.s2014011446.R;
-import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.bean.NewsType;
 import com.ihandy.s2014011446.dao.NewsTypeDao;
-import com.ihandy.s2014011446.ui.widget.MyDragSortListViewAdapter;
 import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.RemoveListener;
 

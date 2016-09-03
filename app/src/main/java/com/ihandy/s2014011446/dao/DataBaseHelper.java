@@ -4,6 +4,7 @@ import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.ihandy.s2014011446.bean.FavoriteItem;
 import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.bean.NewsType;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -24,9 +25,11 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<NewsType,Integer> newsTypeDao = null;
     private Dao<NewsItem,Integer> newsItemDao = null;
+    private Dao<FavoriteItem,Integer> favoriteItemDao = null;
 
     private RuntimeExceptionDao<NewsType,Integer> newsTypeRuntimeDao = null;
     private RuntimeExceptionDao<NewsItem,Integer> newsItemRuntimeDao = null;
+    private RuntimeExceptionDao<FavoriteItem,Integer> favoriteItemRuntimeDao = null;
 
 
     private static DataBaseHelper helper = null;
@@ -54,9 +57,11 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
             TableUtils.createTable(connectionSource, NewsType.class);
             TableUtils.createTable(connectionSource, NewsItem.class);
+            TableUtils.createTable(connectionSource, FavoriteItem.class);
 
             newsItemDao = getNewsItemDao();
             newsTypeDao = getNewsTypeDao();
+            favoriteItemDao = getFavoriteItemDao();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,38 +75,51 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.dropTable(connectionSource, NewsItem.class, true);
             TableUtils.dropTable(connectionSource, NewsType.class, true);
+            TableUtils.dropTable(connectionSource, FavoriteItem.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public Dao<NewsItem,Integer> getNewsItemDao() throws SQLException {
-        if (newsItemDao == null){
-            newsItemDao = getDao(NewsItem.class);
-        }
-        return newsItemDao;
-    }
     public Dao<NewsType,Integer> getNewsTypeDao() throws SQLException {
         if (newsTypeDao == null){
             newsTypeDao = getDao(NewsType.class);
         }
         return newsTypeDao;
     }
-
-
-    public RuntimeExceptionDao<NewsItem, Integer> getNewsItemRuntimeDao() {
-        if (newsItemRuntimeDao == null){
-            newsItemRuntimeDao = getRuntimeExceptionDao(NewsItem.class);
+    public Dao<NewsItem,Integer> getNewsItemDao() throws SQLException {
+        if (newsItemDao == null){
+            newsItemDao = getDao(NewsItem.class);
         }
-        return newsItemRuntimeDao;
+        return newsItemDao;
     }
+    public Dao<FavoriteItem,Integer> getFavoriteItemDao() throws SQLException {
+        if (favoriteItemDao == null){
+            favoriteItemDao = getDao(FavoriteItem.class);
+        }
+        return favoriteItemDao;
+    }
+
+
     public RuntimeExceptionDao<NewsType, Integer> getNewsTypeRuntimeDao() {
         if (newsTypeRuntimeDao == null){
             newsTypeRuntimeDao = getRuntimeExceptionDao(NewsType.class);
         }
         return newsTypeRuntimeDao;
 
+    }
+    public RuntimeExceptionDao<NewsItem, Integer> getNewsItemRuntimeDao() {
+        if (newsItemRuntimeDao == null){
+            newsItemRuntimeDao = getRuntimeExceptionDao(NewsItem.class);
+        }
+        return newsItemRuntimeDao;
+    }
+    public RuntimeExceptionDao<FavoriteItem, Integer> getFavoriteItemRuntimeDao() {
+        if (favoriteItemRuntimeDao == null){
+            favoriteItemRuntimeDao = getRuntimeExceptionDao(FavoriteItem.class);
+        }
+        return favoriteItemRuntimeDao;
     }
 
 

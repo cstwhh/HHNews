@@ -1,4 +1,4 @@
-package com.ihandy.s2014011446.ui.widget;
+package com.ihandy.s2014011446.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;

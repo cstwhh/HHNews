@@ -65,6 +65,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" >
         </activity>
+        <activity
+            android:name="com.ihandy.s2014011446.ui.FavoriteActivity"
+            android:label="Favorite"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent" >
+        </activity>
 
         <!--用户反馈-->
         <activity

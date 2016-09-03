@@ -1,6 +1,7 @@
 package com.ihandy.s2014011446.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,14 +25,17 @@ import android.widget.Toast;
 
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.ihandy.s2014011446.R;
+import com.ihandy.s2014011446.bean.FavoriteItem;
 import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.biz.NewsItemBiz;
+import com.ihandy.s2014011446.dao.FavoriteItemDao;
 import com.ihandy.s2014011446.ui.widget.GestureFrameLayout;
 import com.ihandy.s2014011446.ui.widget.ObservableScrollView;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.nineoldandroids.view.ViewHelper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -45,6 +49,7 @@ public class NewsContentActivity extends BaseActivity {
 
     private GestureFrameLayout gestureFrameLayout;  //滑动返回
     private WebView mWebView;
+    private FavoriteItemDao mFavoriteItemDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class NewsContentActivity extends BaseActivity {
             }
         });
 
+        mFavoriteItemDao = new FavoriteItemDao(NewsContentActivity.this);
 
         mToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_18dp));
@@ -80,6 +86,12 @@ public class NewsContentActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 NewsContentActivity.this.finish();
+                String caller = NewsContentActivity.this.getIntent().getBundleExtra("key").getString("caller");
+                if(caller != null && caller.equals("FavoriteActivity")) {
+                    Intent intent = new Intent(NewsContentActivity.this, FavoriteActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//刷新
+                    startActivity(intent);
+                }
             }
         });
 
@@ -94,6 +106,7 @@ public class NewsContentActivity extends BaseActivity {
         if (isNavBarTransparent()) {
             gestureFrameLayout.setPadding(0, getStatusBarHeight(), 0, getNavigationBarHeight());
         }
+
     }
 
     @Override
@@ -108,7 +121,16 @@ public class NewsContentActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_news_content, menu);
+        //TODO 布局的选择，两个布局里面的id冲突
+        String newsId = this.getIntent().getBundleExtra("key").getString("news_id");
+        try {
+            if(mFavoriteItemDao.searchIsExistByNewsId(newsId))
+                getMenuInflater().inflate(R.menu.menu_news_content_favorite, menu);
+            else
+                getMenuInflater().inflate(R.menu.menu_news_content, menu);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -130,10 +152,26 @@ public class NewsContentActivity extends BaseActivity {
             if(item.getTitle().equals("common")) { //不在收藏列表里面
                 item.setTitle("favorite");
                 item.setIcon(R.drawable.ic_favorite_red);
+                String newsId = this.getIntent().getBundleExtra("key").getString("news_id");
+                String title = this.getIntent().getBundleExtra("key").getString("title");
+                String origin = this.getIntent().getBundleExtra("key").getString("origin");
+                String sourceUrl =  this.getIntent().getBundleExtra("key").getString("url");
+                FavoriteItem favoriteItem = new FavoriteItem();
+                favoriteItem.setNewsId(newsId);
+                favoriteItem.setTitle(title);
+                favoriteItem.setOrigin(origin);
+                favoriteItem.setSourceUrl(sourceUrl);
+                mFavoriteItemDao.createOrUpdate(favoriteItem);
             }
             else if(item.getTitle().equals("favorite")) { //在收藏列表里面
                 item.setTitle("common");
                 item.setIcon(R.drawable.ic_favorite_white);
+                String newsId = this.getIntent().getBundleExtra("key").getString("news_id");
+                try {
+                    mFavoriteItemDao.deleteByNewsId(newsId);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return super.onOptionsItemSelected(item);
