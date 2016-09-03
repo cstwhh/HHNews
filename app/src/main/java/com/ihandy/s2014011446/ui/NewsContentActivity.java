@@ -126,7 +126,16 @@ public class NewsContentActivity extends BaseActivity {
             showShare(this, title + " 详见：" + url + " \n分享自HHNews");
             return true;
         }
-
+        else if(id == R.id.action_favorite) {
+            if(item.getTitle().equals("common")) { //不在收藏列表里面
+                item.setTitle("favorite");
+                item.setIcon(R.drawable.ic_favorite_red);
+            }
+            else if(item.getTitle().equals("favorite")) { //在收藏列表里面
+                item.setTitle("common");
+                item.setIcon(R.drawable.ic_favorite_white);
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 }

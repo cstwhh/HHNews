@@ -6,5 +6,11 @@
         android:title="@string/share"
         android:icon="@drawable/ic_share_white_16dp"
         android:orderInCategory="100"
+        app:showAsAction="always"
+        />
+    <item android:id="@+id/action_favorite"
+        android:title="common"
+        android:icon="@drawable/ic_favorite_white"
+        android:orderInCategory="100"
         app:showAsAction="always" />
 </menu>

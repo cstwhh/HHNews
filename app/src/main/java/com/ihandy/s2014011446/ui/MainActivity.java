@@ -246,17 +246,6 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
     private void getFragmenList(List<NewsListFragment> fragmentList, boolean forced) {
         int total = mNewsTypes.size();
-        //不强制刷新时，如果此页已存在则直接从内存中加载
-//        TODO
-//        if (!forced && total > 0) {
-//            mAdapter.addNews(mNewsTypes);
-//            mAdapter.notifyDataSetChanged();
-//            return;
-//        }
-//
-//        if (forced && mNewsTypes.size() > 0) {
-//            mNewsTypes.clear();
-//        }
         LoadNewsTypesTask loadDataTask = new LoadNewsTypesTask(fragmentList, forced);
         loadDataTask.execute(0);
     }
@@ -332,29 +321,6 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {

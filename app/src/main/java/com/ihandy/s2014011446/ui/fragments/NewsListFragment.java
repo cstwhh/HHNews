@@ -145,6 +145,7 @@ public class NewsListFragment extends BaseFragment {
                         Bundle urlBundle = new Bundle();
                         urlBundle.putString("url",item.getSourceUrl());
                         urlBundle.putString("title", item.getTitle());
+                        urlBundle.putString("news_id", item.getNews_id());
                         startActivityIntent.putExtra("key",urlBundle);
                         ActivityCompat.startActivity(getActivity(), startActivityIntent, options.toBundle());
 

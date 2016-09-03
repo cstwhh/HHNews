@@ -53,6 +53,8 @@ public class WelcomeActivity extends Activity {
                 break;
         }
         mBackgroundImage.setImageDrawable(getResources().getDrawable(drawable));
+        // TODO
+        // android:duration="0" => android:duration="3000"
         Animation animImage = AnimationUtils.loadAnimation(this,R.anim.image_welcome);
         mBackgroundImage.startAnimation(animImage);
         animImage.setAnimationListener(new Animation.AnimationListener() {

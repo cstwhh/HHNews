@@ -48,6 +48,8 @@ public class NewsItem {
 
     public String getOrigin() { return origin; }
 
+    public String getNews_id() {return news_id;}
+
 
     @DatabaseField
     private String category;
