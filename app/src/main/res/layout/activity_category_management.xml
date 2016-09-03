@@ -19,13 +19,15 @@
         />
     <com.mobeta.android.dslv.DragSortListView
         xmlns:dslv="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/dslvUnwatchList"
+        android:id="@+id/dslvWatchList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.0"
         android:layout_margin="3dp"
         android:dividerHeight="1px"
         android:padding="3dp"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
 
         dslv:collapsed_height="5px"
         dslv:float_background_color="?attr/colorPrimary"
@@ -34,6 +36,7 @@
         dslv:drag_start_mode="onLongPress"
         dslv:remove_enabled="true"
         dslv:remove_mode="clickRemove"
+        dslv:click_remove_id="@+id/item_category_watchIcon"
         dslv:paddingEnd="10px"
         />
     <TextView
@@ -48,13 +51,15 @@
     />
     <com.mobeta.android.dslv.DragSortListView
         xmlns:dslv="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/dslvWatchList"
+        android:id="@+id/dslvUnwatchList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.0"
         android:layout_margin="3dp"
         android:dividerHeight="1px"
         android:padding="3dp"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
 
         dslv:collapsed_height="5px"
         dslv:float_background_color="?attr/colorPrimary"
@@ -62,7 +67,8 @@
         dslv:sort_enabled="true"
         dslv:drag_start_mode="onLongPress"
         dslv:remove_enabled="true"
-        dslv:remove_mode="flingRemove"
+        dslv:remove_mode="clickRemove"
+        dslv:click_remove_id="@+id/item_category_unwatchIcon"
         />
 
 </LinearLayout>

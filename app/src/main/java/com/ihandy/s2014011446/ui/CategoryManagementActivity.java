@@ -50,18 +50,19 @@ public class CategoryManagementActivity  extends BaseActivity {
         initData();
         //得到滑动watchListview并且设置监听器。
 
-        watchListView.setDropListener(onDrop);
+        watchListView.setDropListener(onDropWatch);
+        unwatchListView.setDropListener(onDropUnwatch);
         watchListView.setRemoveListener(onRemoveWatch);
         unwatchListView.setRemoveListener(onRemoveUnwatch);
 
 
-        watchCategoryAdapter = new MyDragSortListViewAdapter(CategoryManagementActivity.this, watchCategory);
-        unwatchCategoryAdapter = new MyDragSortListViewAdapter(CategoryManagementActivity.this, unwatchCategory);
+        watchCategoryAdapter = new MyDragSortListViewAdapter(CategoryManagementActivity.this, watchCategory, true);
+        unwatchCategoryAdapter = new MyDragSortListViewAdapter(CategoryManagementActivity.this, unwatchCategory, false);
         watchListView.setAdapter(watchCategoryAdapter);
         unwatchListView.setAdapter(unwatchCategoryAdapter);
     }
     //监听器在手机拖动停下的时候触发
-    private DragSortListView.DropListener onDrop =
+    private DragSortListView.DropListener onDropWatch =
             new DragSortListView.DropListener() {
                 @Override
                 public void drop(int from, int to) {//from to 分别表示 被拖动控件原位置 和目标位置
@@ -69,6 +70,18 @@ public class CategoryManagementActivity  extends BaseActivity {
                         String item = (String)watchCategoryAdapter.getItem(from);//得到listview的适配器
                         watchCategoryAdapter.remove(from);//在适配器中”原位置“的数据。
                         watchCategoryAdapter.insert(item, to);//在目标位置中插入被拖动的控件。
+                    }
+                }
+            };
+
+    private DragSortListView.DropListener onDropUnwatch =
+            new DragSortListView.DropListener() {
+                @Override
+                public void drop(int from, int to) {//from to 分别表示 被拖动控件原位置 和目标位置
+                    if (from != to) {
+                        String item = (String)unwatchCategoryAdapter.getItem(from);//得到listview的适配器
+                        unwatchCategoryAdapter.remove(from);//在适配器中”原位置“的数据。
+                        unwatchCategoryAdapter.insert(item, to);//在目标位置中插入被拖动的控件。
                     }
                 }
             };
