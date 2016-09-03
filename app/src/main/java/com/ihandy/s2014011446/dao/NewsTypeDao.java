@@ -44,8 +44,14 @@ public class NewsTypeDao {
             return newsTypes.get(0);
         }
         return null;
-
     }
 
+    public void setAllIsExist(boolean isExist) {
+        List<NewsType> newsTypes = queryAll();
+        for(NewsType newsType :newsTypes) {
+            newsType.setExist(isExist);
+            createOrUpdate(newsType);
+        }
+    }
 
 }

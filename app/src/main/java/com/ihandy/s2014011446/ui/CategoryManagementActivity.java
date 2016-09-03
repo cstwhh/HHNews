@@ -1,5 +1,6 @@
 package com.ihandy.s2014011446.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.mobeta.android.dslv.DragSortListView.RemoveListener;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,6 +68,10 @@ public class CategoryManagementActivity  extends BaseActivity {
                     }
                 }
                 Log.i("drag", "***********************");
+
+                Intent intent = new Intent(CategoryManagementActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//刷新
+                startActivity(intent);
             }
         });
 
@@ -134,6 +140,7 @@ public class CategoryManagementActivity  extends BaseActivity {
         unwatchCategory=new ArrayList<String>();
         mNewsTypeDao = new NewsTypeDao(CategoryManagementActivity.this);
         List<NewsType> allNewsType = mNewsTypeDao.queryAll();
+        Collections.sort(allNewsType);
         for(NewsType newsType : allNewsType) {
             if(newsType.getShowOrder() >= 0)
                 watchCategory.add(newsType.getUrlType());

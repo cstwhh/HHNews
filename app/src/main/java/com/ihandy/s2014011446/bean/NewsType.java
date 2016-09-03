@@ -1,5 +1,7 @@
 package com.ihandy.s2014011446.bean;
 
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.Date;
  * Created by wuhanghang on 16-8-31.
  */
 
-public class NewsType {
+public class NewsType implements Comparable{
     @DatabaseField(id = true)
     private String urlType;
     @DatabaseField
@@ -52,4 +54,15 @@ public class NewsType {
         this.showOrder = showOrder;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        NewsType newsType=(NewsType)o;
+        if(this.showOrder>newsType.getShowOrder()){
+            return 1;
+        }
+        else if(this.showOrder<newsType.getShowOrder()){
+            return -1;
+        }
+        return 0;
+    }
 }

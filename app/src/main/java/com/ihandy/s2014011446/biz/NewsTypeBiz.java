@@ -16,6 +16,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -66,6 +67,7 @@ public class NewsTypeBiz {
         PATTERN = "\"(.*?)\": \"(.*?)\",?";
         p =Pattern.compile(PATTERN);
         m = p.matcher(keyValueStr);
+        mNewsTypeDao.setAllIsExist(false);
         List<NewsType> newsTypes = new ArrayList<NewsType>();
         while(m.find()) {
             Log.i("getNewsType", "getKeyValue   " + m.group(1) + ":" + m.group(2));
@@ -73,11 +75,32 @@ public class NewsTypeBiz {
             newsType.setUrlType(m.group(1));
             newsType.setShowType(m.group(2));
             newsType.setExist(true);
-            //TODO
-            newsType.setShowOrder(1);
-            newsTypes.add(newsType);
+            NewsType originNewsType = mNewsTypeDao.searchByUrlType(newsType.getUrlType());
+            //TODO 数据库与find的不一致时需要测试
+            if(originNewsType == null) { //原先数据库中不存在
+                newsType.setShowOrder(0); //默认要收看
+                newsTypes.add(newsType); //默认要显示
+            }
+            else { //原先数据库中存在
+                //showOrder与原先保持一致
+                int originShowOrder = originNewsType.getShowOrder();
+                newsType.setShowOrder(originShowOrder);
+                //是否显示
+                if(originShowOrder >= 0)
+                    newsTypes.add(newsType);
+            }
+            //要保存
             mNewsTypeDao.createOrUpdate(newsType);
         }
+        Log.i("sort-test", "before: ");
+        for(NewsType newsType: newsTypes)
+            Log.i("sort-test", newsType.getShowType() + " " + newsType.getShowOrder());
+
+        Collections.sort(newsTypes);
+
+        Log.i("sort-test", "After: ");
+        for(NewsType newsType: newsTypes)
+            Log.i("sort-test", newsType.getShowType() + " " + newsType.getShowOrder());
 
         return newsTypes;
 
