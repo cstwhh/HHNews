@@ -203,7 +203,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mShareButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String imageUrl = "http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/News-Mic-iPhone-icon.png";
+                String imageUrl = MainActivity.this.getResources().getString(R.string.app_icon_url);
                 showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string),
                         "分享应用", null,
                         imageUrl,

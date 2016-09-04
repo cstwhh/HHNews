@@ -147,8 +147,7 @@ public class NewsContentActivity extends BaseActivity {
             String origin =  this.getIntent().getBundleExtra("key").getString("origin");
             String imageUrl =  this.getIntent().getBundleExtra("key").getString("imageUrl");
             if(imageUrl == null)
-                imageUrl = "http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/News-Mic-iPhone-icon.png";
-            //showShare(this, title + " 详见：" + url + " \n分享自HHNews");
+                imageUrl = getResources().getString(R.string.app_icon_url);
             showShare(this, origin , title, null, imageUrl, url);
             return true;
         }
