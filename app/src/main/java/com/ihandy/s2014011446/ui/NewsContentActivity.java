@@ -59,7 +59,7 @@ public class NewsContentActivity extends BaseActivity {
         init();
         //通过bundle获取文章内容的url
         String mNewsContentUrl = this.getIntent().getBundleExtra("key").getString("url");
-        mNewsContentUrl = "https://www.baidu.com";
+        //mNewsContentUrl = "https://www.baidu.com";
         mWebView.loadUrl(mNewsContentUrl);
     }
 
@@ -121,7 +121,6 @@ public class NewsContentActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //TODO 布局的选择，两个布局里面的id冲突
         String newsId = this.getIntent().getBundleExtra("key").getString("news_id");
         try {
             if(mFavoriteItemDao.searchIsExistByNewsId(newsId))
@@ -145,7 +144,12 @@ public class NewsContentActivity extends BaseActivity {
         if (id == R.id.action_share) {
             String title = this.getIntent().getBundleExtra("key").getString("title");
             String url =  this.getIntent().getBundleExtra("key").getString("url");
-            showShare(this, title + " 详见：" + url + " \n分享自HHNews");
+            String origin =  this.getIntent().getBundleExtra("key").getString("origin");
+            String imageUrl =  this.getIntent().getBundleExtra("key").getString("imageUrl");
+            if(imageUrl == null)
+                imageUrl = "http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/News-Mic-iPhone-icon.png";
+            //showShare(this, title + " 详见：" + url + " \n分享自HHNews");
+            showShare(this, origin , title, null, imageUrl, url);
             return true;
         }
         else if(id == R.id.action_favorite) {

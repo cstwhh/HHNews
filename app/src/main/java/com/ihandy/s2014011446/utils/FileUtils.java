@@ -4,8 +4,11 @@ package com.ihandy.s2014011446.utils;
  * Created by wuhanghang on 16-9-2.
  */
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -65,6 +68,30 @@ public class FileUtils {
         fos.flush();
         fos.close();
         Log.i("FileUtils", "savaBitmapToFile: " + path + File.separator + fileName);
+    }
+    public String imageSaveAs(InputStream in, String destFileName) throws IOException {
+        String path = getStorageDirectory();
+        File folderFile = new File(path);
+        if(!folderFile.exists()){
+            folderFile.mkdir();
+        }
+        String fileName = path + File.separator + destFileName;
+        File file = new File(fileName);
+        if(file.exists())   {
+            Log.i("FileUtils", "imageSaveAs: has Exist: " + file.getAbsolutePath());
+            return fileName;
+        }
+        file.createNewFile();
+        FileOutputStream out = new FileOutputStream(file);// 指定要写入的图片
+        int n = 0;// 每次读取的字节长度
+        byte[] bb = new byte[1024];// 存储每次读取的内容
+        while ((n = in.read(bb)) != -1) {
+            out.write(bb, 0, n);// 将读取的内容，写入到输出流当中
+        }
+        out.close();// 关闭输入输出流
+        in.close();
+        Log.i("FileUtils", "imageSaveAs: " + file.getAbsolutePath());
+        return fileName;
     }
 
     /**

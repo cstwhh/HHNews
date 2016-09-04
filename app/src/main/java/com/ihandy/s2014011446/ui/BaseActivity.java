@@ -202,11 +202,11 @@ public class BaseActivity extends ActionBarActivity {
     /**
      * 分享
      */
-    protected void showShare(Context context,String text) {
+    protected void showShare(Context context,String text, String title, String imagePath, String imageUrl, String url) {
         ShareSDK.initSDK(this);
 
         String appHomePage = getString(R.string.app_home_page);
-        String shareText = text != "" ? text : "\n分享自HHNews："+appHomePage;
+        String shareText = text != "" ? text : "\n分享自HHNews";
 
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
@@ -215,22 +215,23 @@ public class BaseActivity extends ActionBarActivity {
         // 分享时Notification的图标和文字
         oks.setNotification(R.drawable.ic_news, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(getString(R.string.share));
+        oks.setTitle(title);
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(appHomePage);
+        oks.setTitleUrl(url);
         // text是分享文本，所有平台都需要这个字段
         oks.setText(shareText);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath(getPackageResourcePath()+"/drawable/ic_suesnews.png");//确保SDcard下面存在此张图片
+
+        if(imageUrl == null)
+            oks.setImagePath(imagePath);//确保SDcard下面存在此张图片
+        if(imagePath == null)
+            oks.setImageUrl(imageUrl);
         // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(appHomePage);
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        //oks.setComment("我是测试评论文本");
+        oks.setUrl(url);
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(appHomePage);
-
         // 启动分享GUI
         oks.show(this);
     }

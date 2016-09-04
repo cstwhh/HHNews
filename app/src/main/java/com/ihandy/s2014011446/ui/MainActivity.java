@@ -3,6 +3,7 @@ package com.ihandy.s2014011446.ui;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -54,10 +55,13 @@ import com.ihandy.s2014011446.common.NewsTypes;
 import com.ihandy.s2014011446.ui.fragments.NewsListFragment;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.ihandy.s2014011446.utils.FileUtils;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.update.UmengUpdateAgent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,7 +203,12 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         mShareButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string));
+                String imageUrl = "http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/News-Mic-iPhone-icon.png";
+                showShare(MainActivity.this, MainActivity.this.getResources().getString(R.string.share_app_string),
+                        "分享应用", null,
+                        imageUrl,
+                        MainActivity.this.getResources().getString(R.string.app_home_page)
+                        );
             }
         });
         //Favorite

@@ -24,7 +24,6 @@ public class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         if (mNewsItemBiz != null){
-            //TODO:关闭helper
         }
     }
 }

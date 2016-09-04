@@ -167,7 +167,7 @@
         <be.webelite.ion.IconView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:name="ion_gear_b"
+            app:name="ion_trash_a"
             android:textSize="@dimen/drawer_icon_size"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginStart="@dimen/text_margin"

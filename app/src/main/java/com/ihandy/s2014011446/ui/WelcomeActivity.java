@@ -39,7 +39,7 @@ public class WelcomeActivity extends Activity {
         Random random = new Random();
         int num = random.nextInt(4);
         int drawable = R.drawable.pic_background_1;
-        switch (num ){
+        switch (num){
             case 0:
                 break;
             case 1:

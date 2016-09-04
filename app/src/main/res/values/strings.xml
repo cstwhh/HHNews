@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">News</string>
-    <string name="news">News</string>
+    <string name="news">吴行行</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Setting</string>
     <string name="action_share">Share</string>
@@ -11,7 +11,7 @@
     <string name="title_activity_news_content"> </string>
     <string name="click_to_exit">再按一次退出程序</string>
     <string name="delete_success">缓存清理成功</string>
-    <string name="app_home_page">http://cstwhh</string>
+    <string name="app_home_page">http://learn.cic.tsinghua.edu.cn/common/netCourseInfo/2015-2016-3-30240332-1</string>
     <string name="setting_key_clear_cache">clear_cache</string>
     <string name="setting_key_post_back">post_back</string>
     <string name="setting_key_check_update">check_update</string>

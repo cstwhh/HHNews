@@ -8,7 +8,7 @@
     tools:context="com.ihandy.s2014011446.ui.AboutActivity">
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                     android:id="@+id/version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="版本：1.0.0"
+                    tools:text="开发人员：吴行行"
                     android:layout_alignParentBottom="true"
                     android:layout_margin="@dimen/view_margin"
                     android:textSize="@dimen/text_size_subhead"/>
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/view_margin"
             android:textSize="@dimen/text_size_normal"
-            android:text="本应用是一个符合 Google MaterialDesign 规范的简单校园新闻客户端"
+            android:text="本应用是一个简单新闻客户端\n"
             />
         <View
             android:layout_width="match_parent"
@@ -78,26 +78,37 @@
             />
         <TextView
             android:id="@+id/title_2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/view_margin"
             android:textSize="@dimen/text_size_title"
-            android:text="联系我："
+            android:gravity="center"
+            android:text="联系方式"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/view_margin"
-            android:textSize="@dimen/text_size_normal"
-            android:text="此应用为熟悉最新设计规范以及新开发环境所做，源代码开源"
+            android:textSize="@dimen/text_size_title"
+            android:gravity="center"
+            android:text="cstwhh@gmail.com\n13269790568"
             android:autoLink="all|web"
             />
         <TextView
+            android:id="@+id/title_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/view_margin"
+            android:textSize="@dimen/text_size_title"
+            android:gravity="center"
+            android:text="学号：2014011446"
+            />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/view_margin"
             android:textSize="@dimen/text_size_normal"
-            android:text="如果您喜欢本应用或有任何意见或建议，可通过 “设置”-“意见反馈”与我进行沟通，或者发送邮件至 cstwhh@gmail.com,感谢您的支持. "
+            android:text="如果您喜欢本应用或有任何意见或建议，可通过以上方式与我联系,感谢您的支持. "
             android:autoLink="all|web"
             />
 

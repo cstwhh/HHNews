@@ -147,6 +147,7 @@ public class NewsListFragment extends BaseFragment {
                         urlBundle.putString("title", item.getTitle());
                         urlBundle.putString("news_id", item.getNews_id());
                         urlBundle.putString("origin", item.getOrigin());
+                        urlBundle.putString("imageUrl", item.getImgsUrl());
                         startActivityIntent.putExtra("key",urlBundle);
                         ActivityCompat.startActivity(getActivity(), startActivityIntent, options.toBundle());
 
