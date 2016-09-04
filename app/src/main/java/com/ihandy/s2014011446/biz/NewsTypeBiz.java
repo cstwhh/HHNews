@@ -2,10 +2,13 @@ package com.ihandy.s2014011446.biz;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ihandy.s2014011446.bean.NewsType;
 import com.ihandy.s2014011446.common.NewsTypes;
 import com.ihandy.s2014011446.dao.NewsTypeDao;
+import com.ihandy.s2014011446.ui.MainActivity;
+import com.ihandy.s2014011446.ui.NewsContentActivity;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.ihandy.s2014011446.utils.NewsAPIUtils;
 import com.ihandy.s2014011446.utils.StringUtils;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,11 +42,13 @@ public class NewsTypeBiz {
         mContext = context;
         mNewsTypeDao = new NewsTypeDao(context);
     }
-    public List<NewsType> getNewsTypes(boolean netAvailable) throws Exception {
+    /*获取数据库中的新闻频道*/
+    public List<NewsType> getNewsTypeCache() throws Exception {
+        return mNewsTypeDao.getCache();
+    }
 
-        //当无网络时加载数据库中数据
-        //有网络时查看数据是否过期,未过期则返回缓存数据
-        //若数据已过期，则重新获取
+    /*在服务器拉取数据，解析*/
+    public List<NewsType> getNewsTypes(boolean netAvailable) throws Exception {
 
         String url = NewsAPIUtils.getTypeUrl();
         Log.i(getClass().getName(), "url: " + url);
@@ -51,7 +57,9 @@ public class NewsTypeBiz {
         try {
             jsonStr = HttpUtils.doGet(url);
         }catch (Exception ex){
-           // return getNewsTypeCache(newsType,currentPage,true);
+            Toast.makeText(mContext, "连接服务器失败，正在获取缓存..."
+                    , Toast.LENGTH_SHORT).show();
+            return getNewsTypeCache();
         }
         Log.i(getClass().getName(), "getNewsTypes: " + jsonStr);
         jsonStr = StringUtils.replaceBlank(jsonStr);
@@ -92,16 +100,7 @@ public class NewsTypeBiz {
             //要保存
             mNewsTypeDao.createOrUpdate(newsType);
         }
-        Log.i("sort-test", "before: ");
-        for(NewsType newsType: newsTypes)
-            Log.i("sort-test", newsType.getShowType() + " " + newsType.getShowOrder());
-
         Collections.sort(newsTypes);
-
-        Log.i("sort-test", "After: ");
-        for(NewsType newsType: newsTypes)
-            Log.i("sort-test", newsType.getShowType() + " " + newsType.getShowOrder());
-
         return newsTypes;
 
     }

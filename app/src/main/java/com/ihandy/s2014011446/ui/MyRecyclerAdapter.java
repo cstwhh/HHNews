@@ -49,8 +49,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         taskCollection = new HashSet<ViewHolder.BitmapWorkerTask>();
         // 获取应用程序最大可用内存
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
-        int cacheSize = maxMemory / 8;
-        // 设置图片缓存大小为程序最大可用内存的1/8
+        int cacheSize = maxMemory / 10;
+        // 设置图片缓存大小为程序最大可用内存的1/10
         mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {

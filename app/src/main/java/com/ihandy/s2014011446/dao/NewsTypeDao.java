@@ -31,6 +31,15 @@ public class NewsTypeDao {
         mNewsTypeDao.createOrUpdate(newsType);
     }
 
+    //网络有问题的情况下获取数据库中的缓存
+    public List<NewsType> getCache() throws SQLException {
+        List<NewsType> newsTypes = mNewsTypeDao.queryBuilder().where().ge("showOrder",0).query();
+        if (newsTypes.size() > 0){
+            return newsTypes;
+        }
+        return null;
+    }
+
 
     public List<NewsType> queryAll(){
         List<NewsType> news = mNewsTypeDao.queryForAll();
@@ -38,7 +47,6 @@ public class NewsTypeDao {
     }
 
     public NewsType searchByUrlType(String urlType) throws SQLException {
-
         List<NewsType> newsTypes = mNewsTypeDao.queryBuilder().where().eq("urlType",urlType).query();
         if (newsTypes.size() > 0){
             return newsTypes.get(0);

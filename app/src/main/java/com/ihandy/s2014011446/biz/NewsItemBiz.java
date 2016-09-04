@@ -9,6 +9,7 @@ import com.ihandy.s2014011446.bean.NewsItem;
 import com.ihandy.s2014011446.common.NewsTypes;
 import com.ihandy.s2014011446.dao.NewsItemDao;
 import com.ihandy.s2014011446.ui.fragments.NewsListFragment;
+import com.ihandy.s2014011446.utils.FileUtils;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.ihandy.s2014011446.utils.StringUtils;
 import com.ihandy.s2014011446.utils.NewsAPIUtils;
@@ -24,15 +25,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * 处理新闻的业务逻辑类
  */
 public class NewsItemBiz {
 
     private NewsItemDao mNewsItemDao;
+    private FileUtils fileUtils;
 
     public NewsItemBiz(Context context) {
         mNewsItemDao = new NewsItemDao(context);
+        fileUtils = new FileUtils(context);
     }
 
     /**
@@ -102,5 +106,6 @@ public class NewsItemBiz {
      */
     public void clearCache(){
         mNewsItemDao.deleteAll();
+        fileUtils.deleteFile();
     }
 }

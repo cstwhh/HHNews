@@ -285,6 +285,11 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
             try {
                 NewsTypeBiz mNewsTypeBiz = new NewsTypeBiz(MainActivity.this);
+                boolean netAvailable = HttpUtils.IsNetAvailable(MainActivity.this);
+                Log.i("test-net-available", "MainActivity-doInBackground: netAvailable:" + netAvailable);
+                if (!netAvailable){
+                    return mNewsTypeBiz.getNewsTypeCache();
+                }
                 return mNewsTypeBiz.getNewsTypes(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -302,8 +307,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         @Override
         protected void onPostExecute(List<NewsType> newsTypes) {
             if (newsTypes == null) {
-                Toast.makeText(MainActivity.this, "获取type失败"
-                        , Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "获取新闻频道失败，请检查网络稍后再试"
+                        , Toast.LENGTH_SHORT).show();
                 return;
             }
             mNewsTypes.addAll(newsTypes);

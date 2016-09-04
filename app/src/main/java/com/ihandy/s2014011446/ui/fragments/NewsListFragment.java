@@ -221,6 +221,7 @@ public class NewsListFragment extends BaseFragment {
         private MyRecyclerAdapter mAdapter;
         private boolean mIsForced;
         private String mNewsType;
+        private boolean netAvailable;
 
         public LoadNewsListTask(MyRecyclerAdapter adapter,String newsType,boolean forced) {
             super();
@@ -239,7 +240,7 @@ public class NewsListFragment extends BaseFragment {
 
             try {
 
-                boolean netAvailable = HttpUtils.IsNetAvailable(getActivity());
+                netAvailable = HttpUtils.IsNetAvailable(getActivity());
                 //netAvailable = false;
                 Log.i("test-net-available", "doInBackground: netAvailable:" + netAvailable);
                 if (!netAvailable){
@@ -273,8 +274,10 @@ public class NewsListFragment extends BaseFragment {
             mAdapter.addNews(newsItems);
             mAdapter.notifyDataSetChanged();
             frame.refreshComplete();
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.net_avaiable)
-                    ,Toast.LENGTH_SHORT).show();
+            if(netAvailable)
+                Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.net_avaiable),Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getActivity(),"获取缓存成功",Toast.LENGTH_SHORT).show();
 //            mNewsItems.addAll(newsItems);
         }
 

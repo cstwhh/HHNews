@@ -26,7 +26,7 @@ public class FileUtils {
     /**
      * 保存Image的目录名
      */
-    private final static String FOLDER_NAME = "/AndroidImage";
+    private final static String FOLDER_NAME = "/NewsCacheImage";
 
 
     public FileUtils(Context context){
@@ -106,6 +106,7 @@ public class FileUtils {
         if (dirFile.isDirectory()) {
             String[] children = dirFile.list();
             for (int i = 0; i < children.length; i++) {
+                Log.i("FileUtils", "deleteFile: " + dirFile + File.separator + children[i]);
                 new File(dirFile, children[i]).delete();
             }
         }
