@@ -49,11 +49,6 @@
             android:theme="@style/AppTheme.Transparent" >
         </activity>
         <activity
-            android:name="com.ihandy.s2014011446.ui.SettingActivity"
-            android:label="@string/action_settings"
-            android:theme="@style/AppTheme.Transparent" >
-        </activity>
-        <activity
             android:name="com.ihandy.s2014011446.ui.AboutActivity"
             android:label="@string/about"
             android:screenOrientation="portrait"
@@ -71,12 +66,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" >
         </activity>
-
-        <!--用户反馈-->
-        <activity
-            android:name="com.umeng.fb.ConversationActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
 
         <!-- share SDK -->
         <activity
@@ -101,21 +90,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--下载更新-->
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
-        <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
-        <!--友盟APPKEY-->
-        <meta-data android:value="54fda2b3fd98c57a8f0008f6" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data
-            android:name="JAVA_COURSE"
-            android:value="JAVA" >
-        </meta-data>
+
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

@@ -56,7 +56,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.ihandy.s2014011446.utils.HttpUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
@@ -85,7 +84,6 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     private View mShareButton;
     private View mFavoriteButton;
     private View mCategoryManagement;
-    private View mFeedBackButton;
 
     private MaterialMenuIconToolbar mMaterialMenu;
 
@@ -126,7 +124,6 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
         initViewPager();
 
-        UmengUpdateAgent.update(this);  //检查更新
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -233,12 +230,13 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
             }
         });
         //设置
-        mAppSetting = (ViewGroup) findViewById(R.id.bottom_drawer);
+        mAppSetting = (ViewGroup) findViewById(R.id.drawer_item_clear_cache);
         mAppSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-                startActivity(intent);
+                NewsItemBiz biz = new NewsItemBiz(MainActivity.this);
+                biz.clearCache();
+                Toast.makeText(MainActivity.this,getResources().getText(R.string.delete_success),Toast.LENGTH_SHORT).show();
             }
         });
     }

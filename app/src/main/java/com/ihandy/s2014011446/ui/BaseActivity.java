@@ -21,7 +21,6 @@ import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ihandy.s2014011446.R;
 import com.ihandy.s2014011446.biz.NewsItemBiz;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.umeng.analytics.MobclickAgent;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -70,16 +69,12 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //友盟统计
-        MobclickAgent.onResume(this);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        //友盟统计
-        MobclickAgent.onPause(this);
     }
 
     @Override
