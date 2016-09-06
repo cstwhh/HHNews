@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.ihandy.s2014011446.ui.NewsContentActivity">
+    tools:context="com.ihandy.a2014011446.ui.NewsContentActivity">
     <item android:id="@+id/action_share"
         android:title="@string/share"
         android:icon="@drawable/ic_share_white_16dp"

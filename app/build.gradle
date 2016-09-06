@@ -6,11 +6,10 @@ android {
         disable 'MissingTranslation'
     }
     compileSdkVersion 21
-    //buildToolsVersion "21.1.2"
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.ihandy.s2014011446"
+        applicationId "com.ihandy.a2014011446"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 4
