@@ -5,28 +5,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ihandy.a2014011446.bean.NewsType;
-import com.ihandy.a2014011446.common.NewsTypes;
 import com.ihandy.a2014011446.dao.NewsTypeDao;
-import com.ihandy.a2014011446.ui.MainActivity;
-import com.ihandy.a2014011446.ui.NewsContentActivity;
 import com.ihandy.a2014011446.utils.HttpUtils;
 import com.ihandy.a2014011446.utils.NewsAPIUtils;
 import com.ihandy.a2014011446.utils.StringUtils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by wuhanghang on 16-8-31.

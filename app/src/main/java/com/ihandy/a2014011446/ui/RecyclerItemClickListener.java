@@ -6,8 +6,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ihandy.a2014011446.R;
-
 /**
  * RecyclerView Item点击监听器
  */

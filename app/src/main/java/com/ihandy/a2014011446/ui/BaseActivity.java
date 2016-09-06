@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -19,7 +18,6 @@ import android.view.ViewConfiguration;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.ihandy.a2014011446.R;
-import com.ihandy.a2014011446.biz.NewsItemBiz;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import cn.sharesdk.framework.ShareSDK;

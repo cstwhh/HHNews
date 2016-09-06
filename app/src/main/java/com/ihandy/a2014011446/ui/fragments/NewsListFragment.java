@@ -3,34 +3,28 @@ package com.ihandy.a2014011446.ui.fragments;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.ihandy.a2014011446.R;
 import com.ihandy.a2014011446.bean.NewsItem;
 import com.ihandy.a2014011446.bean.NewsType;
-import com.ihandy.a2014011446.biz.NewsItemBiz;
-import com.ihandy.a2014011446.common.NewsTypes;
-import com.ihandy.a2014011446.dao.NewsItemDao;
 import com.ihandy.a2014011446.ui.MyRecyclerAdapter;
 import com.ihandy.a2014011446.ui.NewsContentActivity;
 import com.ihandy.a2014011446.ui.RecyclerItemClickListener;
 import com.ihandy.a2014011446.utils.HttpUtils;
-import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;

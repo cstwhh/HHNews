@@ -3,11 +3,6 @@ package com.ihandy.a2014011446.biz;
 /**
  * Created by wuhanghang on 16-9-2.
  */
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,6 +12,12 @@ import android.os.Message;
 import android.support.v4.util.LruCache;
 
 import com.ihandy.a2014011446.utils.FileUtils;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ImageDownLoader {
     /**

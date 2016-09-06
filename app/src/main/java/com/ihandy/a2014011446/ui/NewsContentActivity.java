@@ -1,45 +1,20 @@
 package com.ihandy.a2014011446.ui;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.ihandy.a2014011446.R;
 import com.ihandy.a2014011446.bean.FavoriteItem;
-import com.ihandy.a2014011446.bean.NewsItem;
-import com.ihandy.a2014011446.biz.NewsItemBiz;
 import com.ihandy.a2014011446.dao.FavoriteItemDao;
 import com.ihandy.a2014011446.ui.widget.GestureFrameLayout;
-import com.ihandy.a2014011446.ui.widget.ObservableScrollView;
-import com.ihandy.a2014011446.utils.HttpUtils;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class NewsContentActivity extends BaseActivity {
 

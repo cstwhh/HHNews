@@ -2,10 +2,7 @@ package com.ihandy.a2014011446.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 
 import com.ihandy.a2014011446.R;
 import com.ihandy.a2014011446.utils.CommonUtils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.Random;
 

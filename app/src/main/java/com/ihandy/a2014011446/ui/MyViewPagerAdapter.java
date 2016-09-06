@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-
 import com.ihandy.a2014011446.ui.fragments.NewsListFragment;
 
 import java.util.List;

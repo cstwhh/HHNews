@@ -14,11 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihandy.a2014011446.R;
-import com.ihandy.a2014011446.utils.FileUtils;
 import com.ihandy.a2014011446.bean.NewsItem;
+import com.ihandy.a2014011446.utils.FileUtils;
 
 import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

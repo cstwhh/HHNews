@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+
 import cn.sharesdk.framework.FakeActivity;
 
 /** 查看编辑页面中图片的例子 */

@@ -1,10 +1,6 @@
 package com.ihandy.a2014011446.bean;
 
-import android.util.Log;
-
 import com.j256.ormlite.field.DatabaseField;
-
-import java.util.Date;
 
 /**
  * Created by wuhanghang on 16-8-31.

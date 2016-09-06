@@ -3,7 +3,6 @@ package com.ihandy.a2014011446.dao;
 import android.content.Context;
 
 import com.ihandy.a2014011446.bean.FavoriteItem;
-import com.ihandy.a2014011446.bean.NewsItem;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 

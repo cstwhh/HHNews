@@ -3,12 +3,6 @@ package com.ihandy.a2014011446.utils;
 /**
  * Created by wuhanghang on 16-9-2.
  */
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +10,11 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class FileUtils {
     /**

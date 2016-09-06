@@ -1,14 +1,5 @@
 package com.ihandy.a2014011446.utils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import com.ihandy.a2014011446.common.NewsTypes;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * 相关API
  */

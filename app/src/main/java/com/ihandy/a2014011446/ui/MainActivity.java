@@ -2,74 +2,42 @@ package com.ihandy.a2014011446.ui;
 
 
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
-
-import com.google.android.gms.appindexing.Action;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.ihandy.a2014011446.R;
-import com.ihandy.a2014011446.bean.NewsItem;
 import com.ihandy.a2014011446.bean.NewsType;
 import com.ihandy.a2014011446.biz.NewsItemBiz;
 import com.ihandy.a2014011446.biz.NewsTypeBiz;
-import com.ihandy.a2014011446.common.NewsTypes;
 import com.ihandy.a2014011446.ui.fragments.NewsListFragment;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.ihandy.a2014011446.utils.FileUtils;
 import com.ihandy.a2014011446.utils.HttpUtils;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.umeng.update.UmengUpdateAgent;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-import in.srain.cube.views.ptr.header.MaterialHeader;
-
-import static android.support.v7.widget.RecyclerView.*;
+import static android.support.v7.widget.RecyclerView.OnClickListener;
 
 
 public class MainActivity extends BaseActivity implements ObservableScrollViewCallbacks {

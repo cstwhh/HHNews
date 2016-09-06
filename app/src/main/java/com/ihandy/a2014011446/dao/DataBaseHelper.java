@@ -1,6 +1,5 @@
 package com.ihandy.a2014011446.dao;
 
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 

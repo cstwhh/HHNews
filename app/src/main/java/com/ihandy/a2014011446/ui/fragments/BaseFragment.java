@@ -1,12 +1,9 @@
 package com.ihandy.a2014011446.ui.fragments;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.ihandy.a2014011446.biz.NewsItemBiz;
-import com.ihandy.a2014011446.biz.NewsTypeBiz;
 
 
 public class BaseFragment extends Fragment {

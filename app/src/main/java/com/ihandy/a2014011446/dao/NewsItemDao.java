@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.ihandy.a2014011446.bean.NewsItem;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.j256.ormlite.stmt.DeleteBuilder;
 
 import java.sql.SQLException;
 import java.util.List;

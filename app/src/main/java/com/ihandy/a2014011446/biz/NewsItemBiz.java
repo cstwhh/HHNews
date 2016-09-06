@@ -2,25 +2,18 @@ package com.ihandy.a2014011446.biz;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.ihandy.a2014011446.R;
-import com.ihandy.a2014011446.bean.NewsItem;
-import com.ihandy.a2014011446.common.NewsTypes;
-import com.ihandy.a2014011446.dao.NewsItemDao;
-import com.ihandy.a2014011446.ui.fragments.NewsListFragment;
-import com.ihandy.a2014011446.utils.FileUtils;
-import com.ihandy.a2014011446.utils.HttpUtils;
-import com.ihandy.a2014011446.utils.StringUtils;
-import com.ihandy.a2014011446.utils.NewsAPIUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ihandy.a2014011446.bean.NewsItem;
+import com.ihandy.a2014011446.dao.NewsItemDao;
+import com.ihandy.a2014011446.utils.FileUtils;
+import com.ihandy.a2014011446.utils.HttpUtils;
+import com.ihandy.a2014011446.utils.NewsAPIUtils;
+import com.ihandy.a2014011446.utils.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
