@@ -40,8 +40,8 @@ public class FavoriteActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 FavoriteActivity.this.finish();
-                Intent intent = new Intent(FavoriteActivity.this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(FavoriteActivity.this, MainActivity.class);
+//                startActivity(intent);
             }
         });
         mFavoriteItemDao = new FavoriteItemDao(FavoriteActivity.this);

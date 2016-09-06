@@ -95,11 +95,10 @@ public class HttpUtils {
      * @return
      */
     public static boolean IsNetAvailable(Context context){
-        return false;
-//        ConnectivityManager connectivityManager =
-//                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-//        return (info != null && info.isConnected());
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        return (info != null && info.isConnected());
 
     }
 
