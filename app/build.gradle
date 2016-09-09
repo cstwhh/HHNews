@@ -4,6 +4,10 @@ android {
     lintOptions {
         // 防止在发布的时候出现因MissingTranslation导致Build Failed!
         disable 'MissingTranslation'
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
     compileSdkVersion 21
     buildToolsVersion "23.0.2"

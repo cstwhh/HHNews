@@ -10,6 +10,7 @@ import com.ihandy.a2014011446.utils.HttpUtils;
 import com.ihandy.a2014011446.utils.NewsAPIUtils;
 import com.ihandy.a2014011446.utils.StringUtils;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,8 +32,13 @@ public class NewsTypeBiz {
         mNewsTypeDao = new NewsTypeDao(context);
     }
     /*获取数据库中的新闻频道*/
-    public List<NewsType> getNewsTypeCache() throws Exception {
-        return mNewsTypeDao.getCache();
+    public List<NewsType> getNewsTypeCache(){
+        try {
+            return mNewsTypeDao.getCache();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /*在服务器拉取数据，解析*/

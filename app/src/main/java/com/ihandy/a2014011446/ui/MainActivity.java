@@ -258,18 +258,22 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         @Override
         protected List<NewsType> doInBackground(Integer... currentPage) {
 
+            NewsTypeBiz mNewsTypeBiz = new NewsTypeBiz(MainActivity.this);
             try {
-                NewsTypeBiz mNewsTypeBiz = new NewsTypeBiz(MainActivity.this);
                 boolean netAvailable = HttpUtils.IsNetAvailable(MainActivity.this);
                 Log.i("test-net-available", "MainActivity-doInBackground: netAvailable:" + netAvailable);
                 if (!netAvailable){
                     return mNewsTypeBiz.getNewsTypeCache();
                 }
-                return mNewsTypeBiz.getNewsTypes(true);
+                List<NewsType> newsTypes = mNewsTypeBiz.getNewsTypes(true);
+                if(newsTypes == null) {
+                    return mNewsTypeBiz.getNewsTypeCache();
+                }
+                return newsTypes;
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i("ASDNET", "neterror :" + e);
-                return null;
+                return mNewsTypeBiz.getNewsTypeCache();
             }
 
         }

@@ -167,7 +167,6 @@ public class NewsListFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstVisibleItemPositon = ((LinearLayoutManager)mLayoutManager).findFirstVisibleItemPosition();
                 int lastVisibleItemPositon = ((LinearLayoutManager)mLayoutManager).findLastVisibleItemPosition();
-                Log.i("NewsList", "onScrolled:visible " + firstVisibleItemPositon + "," + lastVisibleItemPositon);
                // mAdapter.bindViewHolderData(firstVisibleItemPositon, lastVisibleItemPositon);
  //               int totalItem = mLayoutManager.getItemCount();
 //                当剩下2个item时加载下一页
